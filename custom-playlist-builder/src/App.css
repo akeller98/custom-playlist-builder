@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  display: flex;
 }
 
 .App-logo {
@@ -7,13 +8,8 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
+  width: 40%;
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -22,6 +18,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  /*overflow-y: scroll;*/
 }
 
 .App-link {
@@ -29,14 +26,15 @@
 }
 
 .metrics-panel {
-  width: 50%;
+  width: 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.genre-selector {
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.display-panel {
+  width: 100%;
+  background: black;
 }

@@ -1,0 +1,22 @@
+.slider-wrapper {
+    text-align: center;
+}
+
+.slider-title {
+    box-sizing: border-box;
+    text-align: end;
+    width: 50%;
+}
+
+.slider-group {
+    display: inline-flex;
+    width: 100%;
+}
+
+.slider-control {
+    box-sizing: border-box;
+    width: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
