@@ -8,11 +8,17 @@ import Button from '@material-ui/core/Button';
 function App() {
   const [accessToken, setAccessToken] = React.useState('');
   const [popularity, setPopularity] = React.useState(0);
+  const [isPopularity, setIsPopularity] = React.useState(true);
   const [energy, setEnergy] = React.useState(0);
+  const [isEnergy, setIsEnergy] = React.useState(true);
   const [instrumentalness, setInstrumentalness] = React.useState(0);
+  const [isInstrumentalness, setIsInstrumentalness] = React.useState(true);
   const [acousticness, setAcousticness] = React.useState(0);
+  const [isAcousticness, setIsAcousticness] = React.useState(true);
   const [happiness, setHappiness] = React.useState(0);
+  const [isHappiness, setIsHappiness] = React.useState(true);
   const [selectedGenres, setSelectedGenres] = React.useState([{id: 'default', checked: false}]);
+  const [spotifyRes, setSpotifyRes] = React.useState({seeds: [], tracks: []});
 
   useEffect(() => {
     let parsed = queryString.parse(window.location.search).access_token;
@@ -21,24 +27,29 @@ function App() {
     }
   }, [accessToken])
 
-  function handlePopularityChange(newPopularity: number): void {
+  function handlePopularityChange(newPopularity: number, isEnabled: boolean): void {
     setPopularity(newPopularity);
+    setIsPopularity(isEnabled);
   }
 
-  function handleEnergyChange(newEnergy: number): void {
+  function handleEnergyChange(newEnergy: number, isEnabled: boolean): void {
     setEnergy(newEnergy);
+    setIsEnergy(isEnabled);
   }
 
-  function handleInstrumentallnessChange(newInstrumentalness: number): void {
+  function handleInstrumentallnessChange(newInstrumentalness: number, isEnabled: boolean): void {
     setInstrumentalness(newInstrumentalness);
+    setIsInstrumentalness(isEnabled);
   }
 
-  function handleAcousticnessChange(newAcousticness: number): void {
+  function handleAcousticnessChange(newAcousticness: number, isEnabled: boolean): void {
     setAcousticness(newAcousticness);
+    setIsAcousticness(isEnabled);
   }
 
-  function handleHappinessChange(newHappiness: number): void {
+  function handleHappinessChange(newHappiness: number, isEnabled: boolean): void {
     setHappiness(newHappiness);
+    setIsHappiness(isEnabled);
   }
 
   function handleGenreChange(newSelectedGenres: {id: string, checked: boolean}[]) {
@@ -55,10 +66,41 @@ function App() {
     return "seed_genres=" + selected_arr.join('%2C');
   }
 
+  function buildTuneableString(): string {
+    let tuneableString: string = '';
+    if (isPopularity) {
+      tuneableString += "&min_popularity=" + popularity;
+    }
+    if (isEnergy) {
+      tuneableString += "&min_energy=" + String(energy/100);
+    }
+    if (isInstrumentalness) {
+      tuneableString += "&min_instrumentalness=" + String(instrumentalness/100);
+    }
+    if (isAcousticness) {
+      tuneableString += "&min_acousticness=" + String(acousticness/100);
+    }
+    if (isHappiness) {
+      tuneableString += "&target_valence=" + String(happiness/100); 
+    }
+    return tuneableString;
+  }
+
   function queryBuilder(): string {
-    const endpoint: string = 'https://api.spotify.com/v1/recommendations?';
-    const genreString: string = generateSeedGenres();
+    let endpoint: string = 'https://api.spotify.com/v1/recommendations?';
+    endpoint += generateSeedGenres() + buildTuneableString();
     return endpoint
+  }
+
+  function onGenerate(): void {
+    console.log(queryBuilder());
+    fetch(queryBuilder(), {
+      headers: {'Authorization': 'Bearer ' + accessToken}
+    }).then(res => res.json())
+    .then(data => {
+      setSpotifyRes(data);
+      console.log(data);
+    });
   }
 
   return (
@@ -89,14 +131,14 @@ function App() {
               name="Happiness"
               onChange={handleHappinessChange}
               />
-            <Button variant="outlined" color="primary">
+            <Button variant="outlined" color="primary" onClick={onGenerate}>
               Generate
             </Button>
           </div>
         </div>
       </div>
       <div className="display-panel">
-        Display Panel
+        {JSON.stringify(spotifyRes)}
       </div>
     </div>
   );
