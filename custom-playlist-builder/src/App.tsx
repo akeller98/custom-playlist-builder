@@ -5,6 +5,7 @@ import MetricSlider from './components/MetricSlider/MetricSlider';
 import GenreSelector from './components/GenreSelector/GenreSelector';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import { GreenButton } from './components/shared/GreenButton';
 
 function App() {
@@ -108,10 +109,16 @@ function App() {
       <Grid container spacing={0}>
         <Grid item lg={4} md={4} sm={12} xs={12} className="App-header">
           <div className="settings-panel">
+            <div className="sub-title">
+              <Typography variant="h3">Genres</Typography>
+            </div>
             <div className="genre-selector">
               <GenreSelector onChange={handleGenreChange}/>
             </div>
             <div className="metrics-panel">
+              <div className="sub-title">
+                <Typography variant="h3">Tuners</Typography>
+              </div>
               <MetricSlider 
                 name="Popularity"
                 onChange={handlePopularityChange}

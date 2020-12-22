@@ -18,7 +18,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-  padding-top: 5%;
+  padding-top: 1em;
   /*overflow-y: scroll;*/
 }
 
@@ -39,4 +39,10 @@
   width: 100%;
   background-color: #161b22;
   color: white;
+}
+
+.sub-title {
+  text-align: left;
+  padding-left: 10%;
+  padding-right: 10%;
 }

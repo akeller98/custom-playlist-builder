@@ -16,7 +16,6 @@ export default function GenreSelector(props: {onChange: (newValue: any[]) => voi
         {id: "k-pop", checked: false}, 
         {id: "country", checked: false}, 
         {id: "classical", checked: false}, 
-        {id: "latin", checked: false}
     ]);
 
     useEffect(() => {
