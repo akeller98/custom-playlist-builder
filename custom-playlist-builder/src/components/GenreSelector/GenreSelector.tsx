@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import * as genres from './helpers/genres.json';
-import * as genresInitialState from './helpers/genreSelectInitialState.json'
+import * as genres from '../helpers/genres.json';
+import * as genresInitialState from '../helpers/genreSelectInitialState.json';
+import { GreenCheckbox }  from '../shared/GreenCheckbox';
 
 export default function GenreSelector(props: {onChange: (newValue: any[]) => void}) {
     //const [state, setState] = useState(genresInitialState.popular_genres)
@@ -41,7 +41,7 @@ export default function GenreSelector(props: {onChange: (newValue: any[]) => voi
                 {state.map((genre) => {
                     return (
                         <FormControlLabel
-                            control={<Checkbox checked={genre.checked} onChange={handleChange} name={genre.id}/>}
+                            control={<GreenCheckbox checked={genre.checked} onChange={handleChange} name={genre.id}/>}
                             label={genre.id}
                         />
                     )

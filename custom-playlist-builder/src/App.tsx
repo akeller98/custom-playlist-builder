@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
 import './App.css';
-import MetricSlider from './components/MetricSlider';
-import GenreSelector from './components/GenreSelector';
+import MetricSlider from './components/MetricSlider/MetricSlider';
+import GenreSelector from './components/GenreSelector/GenreSelector';
+import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import { GreenButton } from './components/shared/GreenButton';
 
 function App() {
   const [accessToken, setAccessToken] = React.useState('');
@@ -87,9 +89,7 @@ function App() {
   }
 
   function queryBuilder(): string {
-    let endpoint: string = 'https://api.spotify.com/v1/recommendations?';
-    endpoint += generateSeedGenres() + buildTuneableString();
-    return endpoint
+    return 'https://api.spotify.com/v1/recommendations?' + generateSeedGenres() + buildTuneableString();
   }
 
   function onGenerate(): void {
@@ -105,41 +105,48 @@ function App() {
 
   return (
     <div className="App">
-      <div className="App-header">
-        <div className="settings-panel">
-          <div className="genre-selector">
-            <GenreSelector onChange={handleGenreChange}/>
+      <Grid container spacing={0}>
+        <Grid item lg={4} md={4} sm={12} xs={12} className="App-header">
+          <div className="settings-panel">
+            <div className="genre-selector">
+              <GenreSelector onChange={handleGenreChange}/>
+            </div>
+            <div className="metrics-panel">
+              <MetricSlider 
+                name="Popularity"
+                onChange={handlePopularityChange}
+                initEnabled={true}
+                />
+              <MetricSlider 
+                name="Energy"
+                onChange={handleEnergyChange}
+                initEnabled={false}
+              />
+              <MetricSlider 
+                name="Instrumentalness"
+                onChange={handleInstrumentallnessChange}
+                initEnabled={false}
+                />
+              <MetricSlider 
+                name="Acousticness"
+                onChange={handleAcousticnessChange}
+                initEnabled={false}
+                />
+              <MetricSlider 
+                name="Happiness"
+                onChange={handleHappinessChange}
+                initEnabled={false}
+                />
+              <GreenButton variant="outlined" color="primary" onClick={onGenerate}>
+                Generate
+              </GreenButton>
+            </div>
           </div>
-          <div className="metrics-panel">
-            <MetricSlider 
-              name="Popularity"
-              onChange={handlePopularityChange}
-              />
-            <MetricSlider 
-              name="Energy"
-              onChange={handleEnergyChange}
-            />
-            <MetricSlider 
-              name="Instrumentalness"
-              onChange={handleInstrumentallnessChange}
-              />
-            <MetricSlider 
-              name="Acousticness"
-              onChange={handleAcousticnessChange}
-              />
-            <MetricSlider 
-              name="Happiness"
-              onChange={handleHappinessChange}
-              />
-            <Button variant="outlined" color="primary" onClick={onGenerate}>
-              Generate
-            </Button>
-          </div>
-        </div>
-      </div>
-      <div className="display-panel">
-        {JSON.stringify(spotifyRes)}
-      </div>
+        </Grid>
+        <Grid item lg={8} md={8} sm={12} xs={12} className="display-panel">
+          {JSON.stringify(spotifyRes)}
+        </Grid>
+      </Grid>
     </div>
   );
 }

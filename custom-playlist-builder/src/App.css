@@ -9,15 +9,16 @@
 }
 
 .App-header {
-  width: 40%;
-  background-color: #282c34;
+  /*: 40%;*/
+  background: #0d1117;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  /*display: flex;*/
+  /*flex-direction: column;*/
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding-top: 5%;
   /*overflow-y: scroll;*/
 }
 
@@ -36,6 +37,6 @@
 
 .display-panel {
   width: 100%;
-  background: black;
+  background-color: #161b22;
   color: white;
 }
