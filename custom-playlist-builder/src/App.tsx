@@ -4,9 +4,9 @@ import './App.css';
 import MetricSlider from './components/MetricSlider/MetricSlider';
 import GenreSelector from './components/GenreSelector/GenreSelector';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { GreenButton } from './components/shared/GreenButton';
+import SpotifyList from './components/SpotifyList/SpotifyList';
 
 function App() {
   const [accessToken, setAccessToken] = React.useState('');
@@ -151,7 +151,9 @@ function App() {
           </div>
         </Grid>
         <Grid item lg={8} md={8} sm={12} xs={12} className="display-panel">
-          {JSON.stringify(spotifyRes)}
+          {spotifyRes.tracks.length !==0 && spotifyRes.seeds.length !==0 && 
+            <SpotifyList tracks={spotifyRes.tracks} />
+          }
         </Grid>
       </Grid>
     </div>

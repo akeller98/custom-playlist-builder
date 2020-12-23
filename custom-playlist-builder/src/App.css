@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   display: flex;
+  
 }
 
 .App-logo {
@@ -20,6 +21,12 @@
   color: white;
   padding-top: 1em;
   /*overflow-y: scroll;*/
+}
+
+.settings-panel {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 1em;
 }
 
 .App-link {
