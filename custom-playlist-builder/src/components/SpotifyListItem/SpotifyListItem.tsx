@@ -4,8 +4,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import Typography from '@material-ui/core/Typography';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
+import { grey } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,12 +24,18 @@ const useStyles = makeStyles((theme: Theme) =>
         color: '#1DB954',
         height: '1.5em',
         width: '1.5em'
+    },
+    disabled: {
+        color: '#bdbdbd',
+        height: '1.5em',
+        width: '1.5em'
     }
   }),
 );
 
 export default function SpotifyListItem(props: {key: any, track: any}) {
     const [isPlaying, setIsPlaying] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(false);
     const audioEl: any = useRef(null);
     const classes = useStyles();
 
@@ -37,7 +45,11 @@ export default function SpotifyListItem(props: {key: any, track: any}) {
         } else if(!isPlaying && audioEl.current !== null){
             audioEl.current.pause();
         }
-    })
+    }, [isPlaying])
+
+    useEffect(() => {
+        setIsDisabled(props.track.preview_url === null);
+    }, [isDisabled])
 
     const getArtists = () => {
         let artist_list: any[] = [];
@@ -77,14 +89,17 @@ export default function SpotifyListItem(props: {key: any, track: any}) {
                     </React.Fragment>
                 }
             />
-            {props.track.preview_url &&
-                <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="play-pause-button" onClick={onPlayPauseClick}>
-                    <PlayCircleOutlineIcon className={classes.playPause}/>
+            <ListItemSecondaryAction>
+                <IconButton edge="end" aria-label="play-pause-button" onClick={onPlayPauseClick} disabled={isDisabled}>
+                    {!isPlaying && 
+                        <PlayCircleOutlineIcon className={isDisabled ? classes.disabled : classes.playPause}/>
+                    }
+                    {isPlaying &&
+                        <PauseCircleOutlineIcon className={classes.playPause} />
+                    }
                 </IconButton>
                 <audio ref={audioEl} src={props.track.preview_url} />
-                </ListItemSecondaryAction>
-            }
+            </ListItemSecondaryAction>
         </ListItem>
     )
 }
