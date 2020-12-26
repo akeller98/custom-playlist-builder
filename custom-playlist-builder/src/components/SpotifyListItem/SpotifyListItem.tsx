@@ -7,7 +7,7 @@ import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import Typography from '@material-ui/core/Typography';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { grey } from '@material-ui/core/colors';
+import { ProgressBar } from '../shared/ProgressBar';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,15 +29,37 @@ const useStyles = makeStyles((theme: Theme) =>
         color: '#bdbdbd',
         height: '1.5em',
         width: '1.5em'
-    }
+    },
   }),
 );
 
 export default function SpotifyListItem(props: {key: any, track: any}) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
+    const [currTime, setCurrTime] = useState(0);
+    const [isActive, setIsActive] = useState(false);
     const audioEl: any = useRef(null);
     const classes = useStyles();
+    const duration = 61;
+
+    useEffect(() => {
+        let interval: any = null;
+        if (isPlaying && currTime !== duration) {
+            interval = setInterval(() => {
+                setCurrTime(currTime => currTime + 1);
+              }, 500);
+        } 
+        else if (isPlaying && currTime === duration) {
+            setIsPlaying(false);
+            setCurrTime(0);
+            clearInterval(interval);
+            setIsActive(false);
+        }
+        else if (!isPlaying && currTime !== 0) {
+            clearInterval(interval);
+        }
+        return () => clearInterval(interval);
+    }, [isPlaying, currTime])
 
     useEffect(() => {
         if (isPlaying && audioEl.current !== null) {
@@ -62,10 +84,9 @@ export default function SpotifyListItem(props: {key: any, track: any}) {
     const onPlayPauseClick = () => {
         if (isPlaying) {
             setIsPlaying(false)
-            console.log('pause')
         } else {
             setIsPlaying(true)
-            console.log('play')
+            setIsActive(true);
         }
     }
 
@@ -86,6 +107,9 @@ export default function SpotifyListItem(props: {key: any, track: any}) {
                         {getArtists()}
                         
                     </Typography>
+                    {isActive &&
+                        <ProgressBar variant="determinate" value={currTime * (100/duration)}/>
+                    }
                     </React.Fragment>
                 }
             />
