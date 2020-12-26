@@ -18,9 +18,9 @@ export default function SpotifyList(props: {tracks: object[]}) {
 
     return (
         <List className={classes.root}>
-            {props.tracks.map((track) => {
+            {props.tracks.map((track, i) => {
                 return (
-                    <SpotifyListItem track={track} />
+                    <SpotifyListItem key={i} track={track} />
                 )
             })}
         </List>

@@ -37,11 +37,12 @@ export default function GenreSelector(props: {onChange: (newValue: any[]) => voi
     return (
         <React.Fragment>
             <FormGroup row>
-                {state.map((genre) => {
+                {state.map((genre, i) => {
                     return (
                         <FormControlLabel
                             control={<GreenCheckbox checked={genre.checked} onChange={handleChange} name={genre.id}/>}
                             label={genre.id}
+                            key={i}
                         />
                     )
                 })}

@@ -72,16 +72,16 @@ function App() {
   function buildTuneableString(): string {
     let tuneableString: string = '';
     if (isPopularity) {
-      tuneableString += "&min_popularity=" + popularity;
+      tuneableString += "&target_popularity=" + popularity;
     }
     if (isEnergy) {
-      tuneableString += "&min_energy=" + String(energy/100);
+      tuneableString += "&target_energy=" + String(energy/100);
     }
     if (isInstrumentalness) {
-      tuneableString += "&min_instrumentalness=" + String(instrumentalness/100);
+      tuneableString += "&target_instrumentalness=" + String(instrumentalness/100);
     }
     if (isAcousticness) {
-      tuneableString += "&min_acousticness=" + String(acousticness/100);
+      tuneableString += "&target_acousticness=" + String(acousticness/100);
     }
     if (isHappiness) {
       tuneableString += "&target_valence=" + String(happiness/100); 
