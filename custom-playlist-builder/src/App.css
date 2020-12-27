@@ -4,11 +4,6 @@
   
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
 .App-header {
   /*: 40%;*/
   background: #0d1117;
@@ -29,10 +24,6 @@
   top: 1em;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
 .metrics-panel {
   width: 100%;
 }
@@ -46,6 +37,18 @@
   width: 100%;
   background-color: #161b22;
   color: white;
+}
+
+.display-header {
+  position: sticky;
+  top: 0em;
+  z-index: 100;
+  color: white;
+  background-color: #0d1117;
+  width: 100%;
+  height: 8em;
+  box-shadow: 0 8px 6px -6px black;
+  text-align: left;
 }
 
 .sub-title {

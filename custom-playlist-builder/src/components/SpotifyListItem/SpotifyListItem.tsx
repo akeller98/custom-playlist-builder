@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     inline: {
       display: 'inline',
-      color: '#1DB954'
+      color: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700]
     },
     albumImage: {
         objectFit: 'contain',
@@ -23,19 +23,21 @@ const useStyles = makeStyles((theme: Theme) =>
     playPause: {
         color: '#1DB954',
         height: '1.5em',
-        width: '1.5em'
+        width: '1.5em',
+        marginRight: '1.5em'
     },
     disabled: {
         color: '#bdbdbd',
         height: '1.5em',
-        width: '1.5em'
+        width: '1.5em',
+        marginRight: '1.5em'
     },
   }),
 );
 
 export default function SpotifyListItem(props: {key: any, track: any}) {
     const [isPlaying, setIsPlaying] = useState(false);
-    const [isDisabled, setIsDisabled] = useState(false);
+    const isDisabled = props.track.preview_url === null
     const [currTime, setCurrTime] = useState(0);
     const [isActive, setIsActive] = useState(false);
     const audioEl: any = useRef(null);
@@ -58,7 +60,9 @@ export default function SpotifyListItem(props: {key: any, track: any}) {
         else if (!isPlaying && currTime !== 0) {
             clearInterval(interval);
         }
-        return () => clearInterval(interval);
+        return () => {
+            clearInterval(interval);
+        }
     }, [isPlaying, currTime])
 
     useEffect(() => {
@@ -69,9 +73,13 @@ export default function SpotifyListItem(props: {key: any, track: any}) {
         }
     }, [isPlaying])
 
-    useEffect(() => {
-        setIsDisabled(props.track.preview_url === null);
-    }, [isDisabled])
+    useEffect(() => { /*FIX THIS LATER*/
+        return function cleanup() {
+            setIsPlaying(false);
+            setCurrTime(0);
+            setIsActive(false);
+        }
+    }, [props.track])
 
     const getArtists = () => {
         let artist_list: any[] = [];

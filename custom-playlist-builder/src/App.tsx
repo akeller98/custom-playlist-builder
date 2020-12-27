@@ -22,13 +22,46 @@ function App() {
   const [isHappiness, setIsHappiness] = React.useState(true);
   const [selectedGenres, setSelectedGenres] = React.useState([{id: 'default', checked: false}]);
   const [spotifyRes, setSpotifyRes] = React.useState({seeds: [], tracks: []});
+  const [userData, setUserData] = React.useState({display_name: ''});
+  const [scrollTop, setScrollTop] = React.useState(0);
+  const [scrolling, setScrolling] = React.useState(false)
+
+  const style = {
+    height: calcHeight() + 'em'
+  };
+
+  function calcHeight() {
+    let height: Number = (8 - (scrollTop/16)); 
+    if (height > 4) {
+      return height;
+    }
+    else {
+      return 4;
+    }
+  }
+
+  useEffect(() => {
+    const onScroll = (e: any) => {
+      setScrollTop(e.target.documentElement.scrollTop);
+      setScrolling(e.target.documentElement.scrollTop > scrollTop);
+    };
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [scrollTop])
 
   useEffect(() => {
     let parsed = queryString.parse(window.location.search).access_token;
     if (typeof parsed === "string") {
       setAccessToken(parsed)
     }
-  }, [accessToken])
+    fetch('https://api.spotify.com/v1/me', {
+      headers: {'Authorization': 'Bearer ' + parsed}
+    }).then(res => res.json())
+    .then(data => {
+      setUserData(data);
+      console.log(data);
+    });
+  }, [])
 
   function handlePopularityChange(newPopularity: number, isEnabled: boolean): void {
     setPopularity(newPopularity);
@@ -151,6 +184,11 @@ function App() {
           </div>
         </Grid>
         <Grid item lg={8} md={8} sm={12} xs={12} className="display-panel">
+          <div className="display-header" style={style}>
+            <Typography>
+              {`Hello, ${userData.display_name}`}
+            </Typography>
+          </div>
           {spotifyRes.tracks.length !==0 && spotifyRes.seeds.length !==0 && 
             <SpotifyList tracks={spotifyRes.tracks} />
           }
