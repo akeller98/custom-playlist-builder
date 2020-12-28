@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { GreenButton } from './components/shared/GreenButton';
 import SpotifyList from './components/SpotifyList/SpotifyList';
+import { InputField } from './components/shared/InputField/InputField';
 
 function App() {
   const [accessToken, setAccessToken] = React.useState('');
@@ -22,7 +23,7 @@ function App() {
   const [isHappiness, setIsHappiness] = React.useState(true);
   const [selectedGenres, setSelectedGenres] = React.useState([{id: 'default', checked: false}]);
   const [spotifyRes, setSpotifyRes] = React.useState({seeds: [], tracks: []});
-  const [userData, setUserData] = React.useState({display_name: ''});
+  const [userData, setUserData] = React.useState({display_name: '', images: [{url: ''}]});
   const [scrollTop, setScrollTop] = React.useState(0);
   const [scrolling, setScrolling] = React.useState(false)
 
@@ -30,8 +31,12 @@ function App() {
     height: calcHeight() + 'em'
   };
 
+  const welcomeTextStyle = {
+    opacity: `${(100 - ((8 - calcHeight()) / 4) *100)}%`
+  }
+
   function calcHeight() {
-    let height: Number = (8 - (scrollTop/16)); 
+    let height: number = (8 - (scrollTop/16)); 
     if (height > 4) {
       return height;
     }
@@ -123,7 +128,7 @@ function App() {
   }
 
   function queryBuilder(): string {
-    return 'https://api.spotify.com/v1/recommendations?' + generateSeedGenres() + buildTuneableString();
+    return 'https://api.spotify.com/v1/recommendations?' + generateSeedGenres() + buildTuneableString() + "&limit=30";
   }
 
   function onGenerate(): void {
@@ -185,9 +190,20 @@ function App() {
         </Grid>
         <Grid item lg={8} md={8} sm={12} xs={12} className="display-panel">
           <div className="display-header" style={style}>
-            <Typography>
-              {`Hello, ${userData.display_name}`}
-            </Typography>
+            <img src={userData.images[0].url} className="user-image" />
+              <div className="user-data">
+                {calcHeight() !== 4 &&
+                  <div className="welcome-text" style={welcomeTextStyle}>
+                    <Typography variant="h4">
+                      {`Welcome back, ${userData.display_name}!`}
+                    </Typography>
+                  </div>
+                }
+                <div className={calcHeight() === 4 ? "sm-create-playlist-text" : "create-playlist-text"} style={calcHeight() !== 4 ? welcomeTextStyle : {}}>
+                  <InputField />
+                </div>
+            </div>
+            
           </div>
           {spotifyRes.tracks.length !==0 && spotifyRes.seeds.length !==0 && 
             <SpotifyList tracks={spotifyRes.tracks} />

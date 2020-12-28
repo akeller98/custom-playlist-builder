@@ -1,0 +1,46 @@
+.text-input {
+    background-color: transparent;
+    color: white;
+    border: none;
+}
+
+.text-input:focus {
+    outline: none;
+    color: green;
+    border-color: green;
+    border-bottom: 1px solid;
+}
+
+.text-input:hover {
+    color: green;
+    border-color: green;
+    border-bottom: 1px solid;
+}
+
+.text-input:hover::placeholder {
+    color: green;
+}
+
+.sm-text-input {
+    background-color: transparent;
+    color: white;
+    border: none;
+}
+
+.sm-text-input:focus {
+    outline: none;
+    color: green;
+    border-color: green;
+    border-bottom: 1px solid;
+}
+
+.sm-text-input:hover {
+    color: green;
+    border-color: green;
+    border-bottom: 1px solid;
+}
+
+.sm-text-input:hover::placeholder {
+    color: green;
+}
+
