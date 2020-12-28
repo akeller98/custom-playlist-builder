@@ -8,5 +8,8 @@ export const GreenButton = withStyles((theme) => ({
     '&:hover': {
       borderColor: '#52af77'
     },
+    '&$disabled': {
+      color: 'white',
+    },
   },
 }))(Button);

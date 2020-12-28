@@ -87,7 +87,12 @@
   padding-top: 0.875em;
 }
 
-.save-button {
+.save-button-container {
   float: right;
   margin-right: 2em;
+}
+
+.save-button {
+  color: #bdbdbd !important;
+  border-color: #bdbdbd !important;
 }

@@ -246,8 +246,8 @@ function App() {
                 }
                 <div className={calcHeight() === 4 ? "sm-create-playlist-text" : "create-playlist-text"} style={calcHeight() !== 4 ? welcomeTextStyle : {}}>
                   <InputField onChange={handleTitleChange}/>
-                  <div className="save-button">
-                    <GreenButton variant="outlined" color="primary" onClick={onSave} disabled={spotifyRes.seeds.length === 0}>
+                  <div className="save-button-container">
+                    <GreenButton className={spotifyRes.seeds.length === 0 ? "save-button" : ''} variant="outlined" color="primary" onClick={onSave} disabled={spotifyRes.seeds.length === 0}>
                       Save Playlist
                     </GreenButton>
                   </div>
