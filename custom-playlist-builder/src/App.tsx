@@ -27,9 +27,11 @@ function App() {
   const [scrollTop, setScrollTop] = React.useState(0);
   const [scrolling, setScrolling] = React.useState(false);
   const [playlistTitle, setPlaylistTitle] = React.useState('');
+  const [message, setMessage] = React.useState('');
 
   const style = {
     height: calcHeight() + 'em'
+    //height: '8em'
   };
 
   const welcomeTextStyle = {
@@ -39,6 +41,7 @@ function App() {
   function calcHeight() {
     let height: number = (8 - (scrollTop/16)); 
     if (height > 4) {
+      console.log(height)
       return height;
     }
     else {
@@ -137,6 +140,15 @@ function App() {
   }
 
   function onGenerate(): void {
+    let selected: boolean[] = [];
+    selectedGenres.map((genre: any) => {
+      selected.push(genre.checked);
+    });
+    let check: boolean = selected.every((e) => {return !e});
+    if (check) {
+      setMessage('Insufficient Genres');
+      return;
+    }
     console.log(queryBuilder());
     fetch(queryBuilder(), {
       headers: {'Authorization': 'Bearer ' + accessToken}
@@ -161,6 +173,10 @@ function App() {
       })
     }).then(res => res.json())
       .then(data => {
+        if (data.error) {
+          setMessage('Token Expired');
+          return;
+        }
         console.log(data);
         let uris: string[] = []
         spotifyRes.tracks.map((track: any) => {
@@ -178,6 +194,10 @@ function App() {
             })
           }).then(res => res.json())
           .then(data => {
+            if (data.error) {
+              setMessage('Token Expired');
+              return;
+            }
             console.log(data);
           })
         } else {
