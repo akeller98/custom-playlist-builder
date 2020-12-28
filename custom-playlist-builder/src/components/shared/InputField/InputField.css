@@ -2,45 +2,26 @@
     background-color: transparent;
     color: white;
     border: none;
+    font-size: 2em;
 }
 
 .text-input:focus {
     outline: none;
-    color: green;
-    border-color: green;
+    color: #52af77;
+    border-color: #52af77;
     border-bottom: 1px solid;
 }
 
 .text-input:hover {
-    color: green;
-    border-color: green;
+    color: #52af77;
+    border-color: #52af77;
     border-bottom: 1px solid;
 }
 
 .text-input:hover::placeholder {
-    color: green;
+    color: #52af77;
 }
 
-.sm-text-input {
-    background-color: transparent;
-    color: white;
-    border: none;
+.text-input:focus::placeholder {
+    color: #52af77;
 }
-
-.sm-text-input:focus {
-    outline: none;
-    color: green;
-    border-color: green;
-    border-bottom: 1px solid;
-}
-
-.sm-text-input:hover {
-    color: green;
-    border-color: green;
-    border-bottom: 1px solid;
-}
-
-.sm-text-input:hover::placeholder {
-    color: green;
-}
-

@@ -23,9 +23,10 @@ function App() {
   const [isHappiness, setIsHappiness] = React.useState(true);
   const [selectedGenres, setSelectedGenres] = React.useState([{id: 'default', checked: false}]);
   const [spotifyRes, setSpotifyRes] = React.useState({seeds: [], tracks: []});
-  const [userData, setUserData] = React.useState({display_name: '', images: [{url: ''}]});
+  const [userData, setUserData] = React.useState({display_name: '', images: [{url: ''}], id: ''});
   const [scrollTop, setScrollTop] = React.useState(0);
-  const [scrolling, setScrolling] = React.useState(false)
+  const [scrolling, setScrolling] = React.useState(false);
+  const [playlistTitle, setPlaylistTitle] = React.useState('');
 
   const style = {
     height: calcHeight() + 'em'
@@ -96,6 +97,10 @@ function App() {
   function handleGenreChange(newSelectedGenres: {id: string, checked: boolean}[]) {
     setSelectedGenres(newSelectedGenres);
   }
+
+  function handleTitleChange(newTitle: string) {
+    setPlaylistTitle(newTitle);
+  }
   
   function generateSeedGenres(): string {
     let selected_arr: string[] = [];
@@ -142,20 +147,60 @@ function App() {
     });
   }
 
+  function onSave(): void {
+    fetch(`https://api.spotify.com/v1/users/${userData.id}/playlists`, {
+      headers: {
+        'Authorization': 'Bearer ' + accessToken,
+        'Content-Type': 'application/json'
+      },
+      method: 'post',
+      body: JSON.stringify({
+        name: playlistTitle,
+        public: false,
+        description: 'Created using Custom Playlist Builder'
+      })
+    }).then(res => res.json())
+      .then(data => {
+        console.log(data);
+        let uris: string[] = []
+        spotifyRes.tracks.map((track: any) => {
+          uris.push(track.uri);
+        });
+        if (data.id) {
+          fetch(`https://api.spotify.com/v1/playlists/${data.id}/tracks`, {
+            headers: {
+              'Authorization': 'Bearer ' + accessToken,
+              'Accept': 'application/json'
+            },
+            method: 'post',
+            body: JSON.stringify({
+              uris: uris
+            })
+          }).then(res => res.json())
+          .then(data => {
+            console.log(data);
+          })
+        } else {
+          console.log('uh oh');
+          return;
+        }
+      })
+  }
+
   return (
     <div className="App">
       <Grid container spacing={0}>
         <Grid item lg={4} md={4} sm={12} xs={12} className="App-header">
           <div className="settings-panel">
             <div className="sub-title">
-              <Typography variant="h3">Genres</Typography>
+              <Typography variant="h4">Genres</Typography>
             </div>
             <div className="genre-selector">
               <GenreSelector onChange={handleGenreChange}/>
             </div>
             <div className="metrics-panel">
               <div className="sub-title">
-                <Typography variant="h3">Tuners</Typography>
+                <Typography variant="h4">Tuners</Typography>
               </div>
               <MetricSlider 
                 name="Popularity"
@@ -200,7 +245,12 @@ function App() {
                   </div>
                 }
                 <div className={calcHeight() === 4 ? "sm-create-playlist-text" : "create-playlist-text"} style={calcHeight() !== 4 ? welcomeTextStyle : {}}>
-                  <InputField />
+                  <InputField onChange={handleTitleChange}/>
+                  <div className="save-button">
+                    <GreenButton variant="outlined" color="primary" onClick={onSave} disabled={spotifyRes.seeds.length === 0}>
+                      Save Playlist
+                    </GreenButton>
+                  </div>
                 </div>
             </div>
             

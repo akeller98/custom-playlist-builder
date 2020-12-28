@@ -31,6 +31,7 @@
 .genre-selector {
   padding-left: 10%;
   padding-right: 10%;
+  margin-bottom: 1em;
 }
 
 .display-panel {
@@ -83,5 +84,10 @@
 .sm-create-playlist-text {
   height: 100%;
   margin-left: 5em;
-  padding-top: 1.25em;
+  padding-top: 0.875em;
+}
+
+.save-button {
+  float: right;
+  margin-right: 2em;
 }
