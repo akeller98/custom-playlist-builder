@@ -1,0 +1,16 @@
+.sub-title {
+    text-align: left;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.genre-selector {
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-bottom: 1em;
+}
+
+.save-button {
+    color: #bdbdbd !important;
+    border-color: #bdbdbd !important;
+  }
