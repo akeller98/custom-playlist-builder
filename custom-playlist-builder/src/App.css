@@ -6,17 +6,13 @@
 }
 
 .App-header {
-  /*: 40%;*/
   background: #0d1117;
   min-height: 100vh;
-  /*display: flex;*/
-  /*flex-direction: column;*/
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
   padding-top: 1em;
-  /*overflow-y: scroll;*/
 }
 
 .settings-panel {
@@ -25,99 +21,10 @@
   top: 1em;
 }
 
-.metrics-panel {
-  width: 100%;
-}
-
-.genre-selector {
-  padding-left: 10%;
-  padding-right: 10%;
-  margin-bottom: 1em;
-}
-
 .display-panel {
   width: 100%;
   background-color: #161b22;
   color: white;
-}
-
-.display-header {
-  position: sticky;
-  top: 0em;
-  z-index: 100;
-  color: white;
-  background-color: #0d1117;
-  width: 100%;
-  height: 8em;
-  box-shadow: 0 8px 6px -6px black;
-  text-align: left;
-}
-
-.sm-display-header {
-  position: sticky;
-  top: 0em;
-  z-index: 100;
-  color: white;
-  background-color: #0d1117;
-  width: 100%;
-  height: 4em;
-  box-shadow: 0 8px 6px -6px black;
-  text-align: left;
-}
-
-
-.sub-title {
-  text-align: left;
-  padding-left: 10%;
-  padding-right: 10%;
-}
-
-.user-image {
-  object-fit: contain;
-  height: 100%;
-  float: left;
-
-}
-
-.user-data {
-  width: 100%;
-  height: 50%;
-}
-
-.hello-text {
-  height: 100%;
-  margin-left: 9em;
-  padding-top: 0.75em;
-}
-
-.create-playlist-text {
-  height: 100%;
-  margin-left: 9em;
-}
-
-.sm-create-playlist-text {
-  height: 100%;
-  margin-left: 5em;
-  padding-top: 0.875em;
-}
-
-.save-button-container {
-  float: right;
-  margin-right: 2em;
-}
-
-.save-button {
-  color: #bdbdbd !important;
-  border-color: #bdbdbd !important;
-}
-
-.loading-save {
-  margin-right: 2.75em;
-}
-
-.loading-playlist {
-  width: 100%;
-  margin-top: 5em;
 }
 
 .welcome-text {
@@ -125,12 +32,3 @@
   height: 100%;
 }
 
-.instruction-text {
-  margin-top: 15em;
-  color: #8f8e8e;
-}
-
-.no-found-text {
-  margin-top: 15em;
-  color: #8f8e8e;
-}

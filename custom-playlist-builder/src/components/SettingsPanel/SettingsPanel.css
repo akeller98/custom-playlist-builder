@@ -14,3 +14,7 @@
     color: #bdbdbd !important;
     border-color: #bdbdbd !important;
   }
+
+  .metrics-panel {
+    width: 100%;
+  }

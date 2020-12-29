@@ -5,6 +5,7 @@ import MetricSlider from '../MetricSlider/MetricSlider';
 import { GreenButton } from '../shared/GreenButton';
 import { AlertMessage } from '../helpers/AlertEnum';
 import { getPlaylist } from '../helpers/http/http';
+import './SettingsPanel.css';
 
 export function SettingsPanel(props: {accessToken: string,
                                         setMessage: (newMessage: string) => void,
