@@ -318,7 +318,7 @@ function App() {
               <CircularProgressBar />
             </div>
           }
-          {spotifyRes.seeds.length === 0 && !isPlaylistLoading &&
+          {spotifyRes.seeds.length === 0 && !isPlaylistLoading && accessToken !== '' &&
             <div className="instruction-text">
               <Typography variant="h5">Use the panel on the left to generate a playlist</Typography>
             </div>
