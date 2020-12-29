@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './InputField.css';
 
-export function InputField(props: {onChange: (newTitle: string) => void}) {
-    const [title, setTitle] = useState("Untitled-playlist-1");
+export function InputField(props: {onChange: (newTitle: string) => void, title: string}) {
+    const [title, setTitle] = useState(props.title);
 
     useEffect(() => {
         props.onChange(title);

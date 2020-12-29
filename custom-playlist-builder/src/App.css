@@ -53,6 +53,19 @@
   text-align: left;
 }
 
+.sm-display-header {
+  position: sticky;
+  top: 0em;
+  z-index: 100;
+  color: white;
+  background-color: #0d1117;
+  width: 100%;
+  height: 4em;
+  box-shadow: 0 8px 6px -6px black;
+  text-align: left;
+}
+
+
 .sub-title {
   text-align: left;
   padding-left: 10%;
@@ -97,3 +110,4 @@
   color: #bdbdbd !important;
   border-color: #bdbdbd !important;
 }
+

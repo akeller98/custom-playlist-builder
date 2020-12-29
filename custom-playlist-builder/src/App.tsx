@@ -5,9 +5,11 @@ import MetricSlider from './components/MetricSlider/MetricSlider';
 import GenreSelector from './components/GenreSelector/GenreSelector';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { Spring } from "react-spring/renderprops";
 import { GreenButton } from './components/shared/GreenButton';
 import SpotifyList from './components/SpotifyList/SpotifyList';
 import { InputField } from './components/shared/InputField/InputField';
+import { title } from 'process';
 
 function App() {
   const [accessToken, setAccessToken] = useState('');
@@ -24,31 +26,9 @@ function App() {
   const [selectedGenres, setSelectedGenres] = useState([{id: 'default', checked: false}]);
   const [spotifyRes, setSpotifyRes] = useState({seeds: [], tracks: []});
   const [userData, setUserData] = useState({display_name: '', images: [{url: ''}], id: ''});
-  const [scrollTop, setScrollTop] = useState(0);
-  const [scrolling, setScrolling] = useState(false);
-  const [playlistTitle, setPlaylistTitle] = useState('');
+  const [playlistTitle, setPlaylistTitle] = useState('Untitled-Playlist-1');
   const [message, setMessage] = useState('');
-  const [isVisible, setIsVisible] = useState(false);
-  const height = calcHeight();
-
-  function calcHeight() {
-    let height: number = (8 - (scrollTop/16)); 
-    if (height > 4) {
-      return height;
-    }
-    else {
-      return 4;
-    }
-  }
-/*
-  useEffect(() => {
-    const onScroll = (e: any) => {
-      setScrollTop(e.target.documentElement.scrollTop);
-      setScrolling(e.target.documentElement.scrollTop > scrollTop);
-    };
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [scrollTop])*/
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     let parsed = queryString.parse(window.location.search).access_token;
@@ -250,26 +230,51 @@ function App() {
           </div>
         </Grid>
         <Grid item lg={8} md={8} sm={12} xs={12} className="display-panel">
-          <div className="display-header">
-            <img src={userData.images[0].url} className="user-image" alt={userData.display_name}/>
-              <div className="user-data">
-                {height !== 4 &&
+          {isVisible && 
+            <div className="display-header">
+              <img src={userData.images[0].url} className="user-image" alt={userData.display_name}/>
+                <div className="user-data">
                   <div className="welcome-text">
                     <Typography variant="h4">
                       {`Welcome back, ${userData.display_name}!`}
                     </Typography>
                   </div>
-                }
-                <div className={height === 4 ? "sm-create-playlist-text" : "create-playlist-text"}>
-                  <InputField onChange={handleTitleChange}/>
-                  <div className="save-button-container">
-                    <GreenButton className={spotifyRes.seeds.length === 0 ? "save-button" : ''} variant="outlined" color="primary" onClick={onSave} disabled={spotifyRes.seeds.length === 0}>
-                      Save Playlist
-                    </GreenButton>
+                  <div className="create-playlist-text">
+                    <InputField onChange={handleTitleChange} title={playlistTitle}/>
+                    <div className="save-button-container">
+                      <GreenButton className={spotifyRes.seeds.length === 0 ? "save-button" : ''} variant="outlined" color="primary" onClick={onSave} disabled={spotifyRes.seeds.length === 0}>
+                        Save Playlist
+                      </GreenButton>
+                    </div>
                   </div>
                 </div>
               </div>
-          </div>
+          }
+          {!isVisible &&
+            <Spring
+              from={{ opacity: !isVisible ? 0 : 1}}
+              to={{ opacity: !isVisible ? 1 : 0}}
+              config={{duration: 200}}
+            >
+            {
+              props => (
+                <div className="sm-display-header" style={props}>
+                  <img src={userData.images[0].url} className="user-image" alt={userData.display_name}/>
+                    <div className="user-data">
+                      <div className="sm-create-playlist-text">
+                        <InputField onChange={handleTitleChange} title={playlistTitle}/>
+                        <div className="save-button-container">
+                          <GreenButton className={spotifyRes.seeds.length === 0 ? "save-button" : ''} variant="outlined" color="primary" onClick={onSave} disabled={spotifyRes.seeds.length === 0}>
+                            Save Playlist
+                          </GreenButton>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              )
+            }
+            </Spring>
+          }
           {spotifyRes.tracks.length !==0 && spotifyRes.seeds.length !==0 && 
             <SpotifyList tracks={spotifyRes.tracks} onChange={handleVisibleChange}/>
           }
