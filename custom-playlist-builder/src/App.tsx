@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
-import './App.css';
-import MetricSlider from './components/MetricSlider/MetricSlider';
-import GenreSelector from './components/GenreSelector/GenreSelector';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { Spring } from "react-spring/renderprops";
 import { GreenButton } from './components/shared/GreenButton';
 import SpotifyList from './components/SpotifyList/SpotifyList';
 import { InputField } from './components/shared/InputField/InputField';
-import { title } from 'process';
+import { CircularProgressBar } from './components/shared/CircularProgressBar';
+import MetricSlider from './components/MetricSlider/MetricSlider';
+import GenreSelector from './components/GenreSelector/GenreSelector';
+import './App.css';
 
 function App() {
   const [accessToken, setAccessToken] = useState('');
@@ -29,6 +29,8 @@ function App() {
   const [playlistTitle, setPlaylistTitle] = useState('Untitled-Playlist-1');
   const [message, setMessage] = useState('');
   const [isVisible, setIsVisible] = useState(true);
+  const [isPlaylistLoading, setIsPlaylistLoading] = useState(false);
+  const [isSaveLoading, setIsSaveLoading] = useState(false);
 
   useEffect(() => {
     let parsed = queryString.parse(window.location.search).access_token;
@@ -122,20 +124,25 @@ function App() {
     });
     let check: boolean = selected.every((e) => {return !e});
     if (check) {
+      setIsPlaylistLoading(false);
       setMessage('Insufficient Genres');
       return;
     }
+    setSpotifyRes({seeds: [], tracks: []});
+    setIsPlaylistLoading(true);
     console.log(queryBuilder());
     fetch(queryBuilder(), {
       headers: {'Authorization': 'Bearer ' + accessToken}
     }).then(res => res.json())
     .then(data => {
+      setIsPlaylistLoading(false);
       setSpotifyRes(data);
       console.log(data);
     });
   }
 
   function onSave(): void {
+    setIsSaveLoading(true);
     fetch(`https://api.spotify.com/v1/users/${userData.id}/playlists`, {
       headers: {
         'Authorization': 'Bearer ' + accessToken,
@@ -151,6 +158,7 @@ function App() {
       .then(data => {
         if (data.error) {
           setMessage('Token Expired');
+          setIsSaveLoading(false);
           return;
         }
         console.log(data);
@@ -171,13 +179,16 @@ function App() {
           }).then(res => res.json())
           .then(data => {
             if (data.error) {
+              setIsSaveLoading(false);
               setMessage('Token Expired');
               return;
             }
+            setIsSaveLoading(false);
             console.log(data);
           })
         } else {
           console.log('uh oh');
+          setIsSaveLoading(false);
           return;
         }
       })
@@ -242,9 +253,14 @@ function App() {
                   <div className="create-playlist-text">
                     <InputField onChange={handleTitleChange} title={playlistTitle}/>
                     <div className="save-button-container">
-                      <GreenButton className={spotifyRes.seeds.length === 0 ? "save-button" : ''} variant="outlined" color="primary" onClick={onSave} disabled={spotifyRes.seeds.length === 0}>
-                        Save Playlist
-                      </GreenButton>
+                      {isSaveLoading ? 
+                        <div className="loading-save">
+                          <CircularProgressBar />
+                        </div> :
+                        <GreenButton className={spotifyRes.seeds.length === 0 ? "save-button" : ''} variant="outlined" color="primary" onClick={onSave} disabled={spotifyRes.seeds.length === 0}>
+                          Save Playlist
+                        </GreenButton>
+                      }
                     </div>
                   </div>
                 </div>
@@ -264,9 +280,14 @@ function App() {
                       <div className="sm-create-playlist-text">
                         <InputField onChange={handleTitleChange} title={playlistTitle}/>
                         <div className="save-button-container">
+                        {isSaveLoading ? 
+                          <div className="loading-save">
+                            <CircularProgressBar />
+                          </div> :
                           <GreenButton className={spotifyRes.seeds.length === 0 ? "save-button" : ''} variant="outlined" color="primary" onClick={onSave} disabled={spotifyRes.seeds.length === 0}>
                             Save Playlist
                           </GreenButton>
+                        }
                         </div>
                       </div>
                     </div>
@@ -274,6 +295,11 @@ function App() {
               )
             }
             </Spring>
+          }
+          {isPlaylistLoading &&
+            <div className="loading-playlist">
+              <CircularProgressBar />
+            </div>
           }
           {spotifyRes.tracks.length !==0 && spotifyRes.seeds.length !==0 && 
             <SpotifyList tracks={spotifyRes.tracks} onChange={handleVisibleChange}/>

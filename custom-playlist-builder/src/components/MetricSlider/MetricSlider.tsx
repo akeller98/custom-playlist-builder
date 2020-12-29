@@ -22,7 +22,7 @@ function valuetext(value: number) {
 }
 
 export default function MetricSlider(props: {name: string, onChange: (newValue: number, isEnabled: boolean) => void, initEnabled: boolean}) {
-    const defaultVal = 20;
+    const defaultVal = 0;
     const [currValue, setCurrValue] = useState(defaultVal);
     const [isEnabled, setIsEnabled] = useState(props.initEnabled);
 

@@ -8,7 +8,7 @@ import { GreenCheckbox }  from '../shared/GreenCheckbox';
 export default function GenreSelector(props: {onChange: (newValue: any[]) => void}) {
     //const [state, setState] = useState(genresInitialState.popular_genres)
     const [state, setState] = useState([
-        {id: "pop", checked: false}, 
+        {id: "pop", checked: true}, 
         {id: "hip-hop", checked: false}, 
         {id: "rock", checked: false}, 
         {id: "edm", checked: false}, 
