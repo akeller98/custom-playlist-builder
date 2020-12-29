@@ -7,6 +7,7 @@ import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import Typography from '@material-ui/core/Typography';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
+import VisibilitySensor from "react-visibility-sensor";
 import { ProgressBar } from '../shared/ProgressBar';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -35,11 +36,12 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function SpotifyListItem(props: {key: any, track: any}) {
+export default function SpotifyListItem(props: {key: any, track: any, index: number, onChange: (newVisible: boolean) => void}) {
     const [isPlaying, setIsPlaying] = useState(false);
     const isDisabled = props.track.preview_url === null
     const [currTime, setCurrTime] = useState(0);
     const [isActive, setIsActive] = useState(false);
+    const [isAnimate, setIsAnimate] = useState(false);
     const audioEl: any = useRef(null);
     const classes = useStyles();
     const duration = 61;
@@ -81,10 +83,14 @@ export default function SpotifyListItem(props: {key: any, track: any}) {
         }
     }, [props.track])
 
+    useEffect(() => { /*FIX THIS TOO */
+        props.onChange(isAnimate);
+    }, [isAnimate])
+
     const getArtists = () => {
         let artist_list: any[] = [];
         props.track.artists.map((artist: any) => {
-            artist_list.push(artist.name);
+            return artist_list.push(artist.name);
         })
         return artist_list.join(', ');
     }
@@ -99,39 +105,47 @@ export default function SpotifyListItem(props: {key: any, track: any}) {
     }
 
     return (
-        <ListItem button={true} alignItems="flex-start">
-            <img src={props.track.album.images[0].url} className={classes.albumImage}/>
-            <ListItemText
-                primary={props.track.name}
-                secondary={
-                    <React.Fragment>
-                    <Typography
-                        component="span"
-                        variant="body2"
-                        className={classes.inline}
-                    >
-                        {props.track.album.name}
-                        <br/>
-                        {getArtists()}
-                        
-                    </Typography>
-                    {isActive &&
-                        <ProgressBar variant="determinate" value={currTime * (100/duration)}/>
-                    }
-                    </React.Fragment>
+        <VisibilitySensor
+            onChange={(isVisible) => {
+                if (props.index === 1) {
+                    setIsAnimate(isVisible);
                 }
-            />
-            <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="play-pause-button" onClick={onPlayPauseClick} disabled={isDisabled}>
-                    {!isPlaying && 
-                        <PlayCircleOutlineIcon className={isDisabled ? classes.disabled : classes.playPause}/>
+            }}
+        >
+            <ListItem button={true} alignItems="flex-start">
+                <img alt={props.track.album.name} src={props.track.album.images[0].url} className={classes.albumImage}/>
+                <ListItemText
+                    primary={props.track.name}
+                    secondary={
+                        <React.Fragment>
+                        <Typography
+                            component="span"
+                            variant="body2"
+                            className={classes.inline}
+                        >
+                            {props.track.album.name}
+                            <br/>
+                            {getArtists()}
+                            
+                        </Typography>
+                        {isActive &&
+                            <ProgressBar variant="determinate" value={currTime * (100/duration)}/>
+                        }
+                        </React.Fragment>
                     }
-                    {isPlaying &&
-                        <PauseCircleOutlineIcon className={classes.playPause} />
-                    }
-                </IconButton>
-                <audio ref={audioEl} src={props.track.preview_url} />
-            </ListItemSecondaryAction>
-        </ListItem>
+                />
+                <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="play-pause-button" onClick={onPlayPauseClick} disabled={isDisabled}>
+                        {!isPlaying && 
+                            <PlayCircleOutlineIcon className={isDisabled ? classes.disabled : classes.playPause}/>
+                        }
+                        {isPlaying &&
+                            <PauseCircleOutlineIcon className={classes.playPause} />
+                        }
+                    </IconButton>
+                    <audio ref={audioEl} src={props.track.preview_url} />
+                </ListItemSecondaryAction>
+            </ListItem>
+        </VisibilitySensor>
     )
 }

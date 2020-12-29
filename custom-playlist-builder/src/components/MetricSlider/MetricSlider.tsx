@@ -28,7 +28,7 @@ export default function MetricSlider(props: {name: string, onChange: (newValue: 
 
     useEffect(() => {
         props.onChange(currValue, isEnabled)
-    }, [currValue, isEnabled])
+    }, [currValue, isEnabled, props])
 
     function handleChange(event: object, value: number | number[]) {
         if (typeof value === "number") {

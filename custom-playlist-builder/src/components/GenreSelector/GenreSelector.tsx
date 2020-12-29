@@ -20,16 +20,16 @@ export default function GenreSelector(props: {onChange: (newValue: any[]) => voi
 
     useEffect(() => {
         props.onChange(state)
-    }, [state]);
+    }, [state, props]);
 
     const handleChange = (event: { target: { checked: boolean; name: string; }; }) => {
         let updated_box = {id: event.target.name, checked: event.target.checked};
         let updated_state: { id: string; checked: boolean; }[] = [];
         state.map((genre) => {
             if (genre.id === event.target.name) {
-                updated_state.push(updated_box);
+                return updated_state.push(updated_box);
             } else {
-                updated_state.push(genre);
+                return updated_state.push(genre);
             }
         })
         setState(state => updated_state)

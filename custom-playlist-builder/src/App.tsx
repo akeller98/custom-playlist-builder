@@ -10,45 +10,37 @@ import SpotifyList from './components/SpotifyList/SpotifyList';
 import { InputField } from './components/shared/InputField/InputField';
 
 function App() {
-  const [accessToken, setAccessToken] = React.useState('');
-  const [popularity, setPopularity] = React.useState(0);
-  const [isPopularity, setIsPopularity] = React.useState(true);
-  const [energy, setEnergy] = React.useState(0);
-  const [isEnergy, setIsEnergy] = React.useState(true);
-  const [instrumentalness, setInstrumentalness] = React.useState(0);
-  const [isInstrumentalness, setIsInstrumentalness] = React.useState(true);
-  const [acousticness, setAcousticness] = React.useState(0);
-  const [isAcousticness, setIsAcousticness] = React.useState(true);
-  const [happiness, setHappiness] = React.useState(0);
-  const [isHappiness, setIsHappiness] = React.useState(true);
-  const [selectedGenres, setSelectedGenres] = React.useState([{id: 'default', checked: false}]);
-  const [spotifyRes, setSpotifyRes] = React.useState({seeds: [], tracks: []});
-  const [userData, setUserData] = React.useState({display_name: '', images: [{url: ''}], id: ''});
-  const [scrollTop, setScrollTop] = React.useState(0);
-  const [scrolling, setScrolling] = React.useState(false);
-  const [playlistTitle, setPlaylistTitle] = React.useState('');
-  const [message, setMessage] = React.useState('');
-
-  const style = {
-    height: calcHeight() + 'em'
-    //height: '8em'
-  };
-
-  const welcomeTextStyle = {
-    opacity: `${(100 - ((8 - calcHeight()) / 4) *100)}%`
-  }
+  const [accessToken, setAccessToken] = useState('');
+  const [popularity, setPopularity] = useState(0);
+  const [isPopularity, setIsPopularity] = useState(true);
+  const [energy, setEnergy] = useState(0);
+  const [isEnergy, setIsEnergy] = useState(true);
+  const [instrumentalness, setInstrumentalness] = useState(0);
+  const [isInstrumentalness, setIsInstrumentalness] = useState(true);
+  const [acousticness, setAcousticness] = useState(0);
+  const [isAcousticness, setIsAcousticness] = useState(true);
+  const [happiness, setHappiness] = useState(0);
+  const [isHappiness, setIsHappiness] = useState(true);
+  const [selectedGenres, setSelectedGenres] = useState([{id: 'default', checked: false}]);
+  const [spotifyRes, setSpotifyRes] = useState({seeds: [], tracks: []});
+  const [userData, setUserData] = useState({display_name: '', images: [{url: ''}], id: ''});
+  const [scrollTop, setScrollTop] = useState(0);
+  const [scrolling, setScrolling] = useState(false);
+  const [playlistTitle, setPlaylistTitle] = useState('');
+  const [message, setMessage] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
+  const height = calcHeight();
 
   function calcHeight() {
     let height: number = (8 - (scrollTop/16)); 
     if (height > 4) {
-      console.log(height)
       return height;
     }
     else {
       return 4;
     }
   }
-
+/*
   useEffect(() => {
     const onScroll = (e: any) => {
       setScrollTop(e.target.documentElement.scrollTop);
@@ -56,7 +48,7 @@ function App() {
     };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, [scrollTop])
+  }, [scrollTop])*/
 
   useEffect(() => {
     let parsed = queryString.parse(window.location.search).access_token;
@@ -105,11 +97,15 @@ function App() {
     setPlaylistTitle(newTitle);
   }
   
+  function handleVisibleChange(newVisible: boolean) {
+    setIsVisible(newVisible);
+  }
+
   function generateSeedGenres(): string {
     let selected_arr: string[] = [];
     selectedGenres.map((genre) => {
       if (genre.checked) {
-        selected_arr.push(genre.id);
+        return selected_arr.push(genre.id);
       }
     });
     return "seed_genres=" + selected_arr.join('%2C');
@@ -142,7 +138,7 @@ function App() {
   function onGenerate(): void {
     let selected: boolean[] = [];
     selectedGenres.map((genre: any) => {
-      selected.push(genre.checked);
+      return selected.push(genre.checked);
     });
     let check: boolean = selected.every((e) => {return !e});
     if (check) {
@@ -180,7 +176,7 @@ function App() {
         console.log(data);
         let uris: string[] = []
         spotifyRes.tracks.map((track: any) => {
-          uris.push(track.uri);
+          return uris.push(track.uri);
         });
         if (data.id) {
           fetch(`https://api.spotify.com/v1/playlists/${data.id}/tracks`, {
@@ -254,17 +250,17 @@ function App() {
           </div>
         </Grid>
         <Grid item lg={8} md={8} sm={12} xs={12} className="display-panel">
-          <div className="display-header" style={style}>
-            <img src={userData.images[0].url} className="user-image" />
+          <div className="display-header">
+            <img src={userData.images[0].url} className="user-image" alt={userData.display_name}/>
               <div className="user-data">
-                {calcHeight() !== 4 &&
-                  <div className="welcome-text" style={welcomeTextStyle}>
+                {height !== 4 &&
+                  <div className="welcome-text">
                     <Typography variant="h4">
                       {`Welcome back, ${userData.display_name}!`}
                     </Typography>
                   </div>
                 }
-                <div className={calcHeight() === 4 ? "sm-create-playlist-text" : "create-playlist-text"} style={calcHeight() !== 4 ? welcomeTextStyle : {}}>
+                <div className={height === 4 ? "sm-create-playlist-text" : "create-playlist-text"}>
                   <InputField onChange={handleTitleChange}/>
                   <div className="save-button-container">
                     <GreenButton className={spotifyRes.seeds.length === 0 ? "save-button" : ''} variant="outlined" color="primary" onClick={onSave} disabled={spotifyRes.seeds.length === 0}>
@@ -272,11 +268,10 @@ function App() {
                     </GreenButton>
                   </div>
                 </div>
-            </div>
-            
+              </div>
           </div>
           {spotifyRes.tracks.length !==0 && spotifyRes.seeds.length !==0 && 
-            <SpotifyList tracks={spotifyRes.tracks} />
+            <SpotifyList tracks={spotifyRes.tracks} onChange={handleVisibleChange}/>
           }
         </Grid>
       </Grid>

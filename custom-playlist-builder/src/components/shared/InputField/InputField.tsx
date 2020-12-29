@@ -6,7 +6,7 @@ export function InputField(props: {onChange: (newTitle: string) => void}) {
 
     useEffect(() => {
         props.onChange(title);
-    }, [title])
+    }, [title, props])
 
     const handleChange = (event: any) => {
         setTitle(event.target.value);
