@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { AlertVariant, AlertMessage, AlertString } from '../helpers/AlertEnum';
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -10,15 +11,35 @@ function Alert(props: AlertProps) {
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
       width: '100%',
+      height: '2em',
       '& > * + *': {
         marginTop: theme.spacing(2),
       },
+      zIndex: 100,
     },
 }));
 
-export function SnackbarNotif(props: any) {
+export function SnackbarNotif(props: {isOpen: boolean, message: string, onClose: (isClosed: boolean) => void}) {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(props.isOpen);
+    let severity: any = '';
+    let alertString: string = '';
+
+    useEffect(() => {
+        props.onClose(!open);
+    }, [open])
+
+    if (props.message === AlertMessage.GenreError) {
+        severity = AlertVariant.INSUFFICIENT_GENRES;
+        alertString = AlertString.GenreError;
+    } else if (props.message === AlertMessage.TokenError) {
+        severity = AlertVariant.TOKEN_EXPIRED;
+        alertString = AlertString.TokenError;
+    } else {
+        severity = AlertVariant.SAVE_SUCCESS;
+        alertString = AlertString.SaveSuccess;
+    }
+
     const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
           return;
@@ -29,14 +50,10 @@ export function SnackbarNotif(props: any) {
     return (
         <div className={classes.root}>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="success">
-                This is a success message!
+                <Alert onClose={handleClose} severity={severity}>
+                    {alertString}
                 </Alert>
             </Snackbar>
-            <Alert severity="error">This is an error message!</Alert>
-            <Alert severity="warning">This is a warning message!</Alert>
-            <Alert severity="info">This is an information message!</Alert>
-            <Alert severity="success">This is a success message!</Alert>
         </div>
     );
 }

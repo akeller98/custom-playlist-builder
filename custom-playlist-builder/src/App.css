@@ -84,7 +84,7 @@
   height: 50%;
 }
 
-.welcome-text {
+.hello-text {
   height: 100%;
   margin-left: 9em;
   padding-top: 0.75em;
@@ -120,3 +120,17 @@
   margin-top: 5em;
 }
 
+.welcome-text {
+  width: 100%;
+  height: 100%;
+}
+
+.instruction-text {
+  margin-top: 15em;
+  color: #8f8e8e;
+}
+
+.no-found-text {
+  margin-top: 15em;
+  color: #8f8e8e;
+}

@@ -9,6 +9,10 @@ import { InputField } from './components/shared/InputField/InputField';
 import { CircularProgressBar } from './components/shared/CircularProgressBar';
 import MetricSlider from './components/MetricSlider/MetricSlider';
 import GenreSelector from './components/GenreSelector/GenreSelector';
+import { AlertMessage } from './components/helpers/AlertEnum';
+import { SnackbarNotif } from './components/Snackbar/SnackbarNotif';
+import SignInModal from './components/Modal/SignInModal';
+import { WelcomeText } from './components/WelcomeText/WelcomeText';
 import './App.css';
 
 function App() {
@@ -36,13 +40,14 @@ function App() {
     let parsed = queryString.parse(window.location.search).access_token;
     if (typeof parsed === "string") {
       setAccessToken(parsed)
+    } else {
+      return;
     }
     fetch('https://api.spotify.com/v1/me', {
       headers: {'Authorization': 'Bearer ' + parsed}
     }).then(res => res.json())
     .then(data => {
       setUserData(data);
-      console.log(data);
     });
   }, [])
 
@@ -81,6 +86,12 @@ function App() {
   
   function handleVisibleChange(newVisible: boolean) {
     setIsVisible(newVisible);
+  }
+
+  function handleSnackbarClose(isClosed: boolean) {
+    if (isClosed) {
+      setMessage('');
+    }
   }
 
   function generateSeedGenres(): string {
@@ -125,7 +136,7 @@ function App() {
     let check: boolean = selected.every((e) => {return !e});
     if (check) {
       setIsPlaylistLoading(false);
-      setMessage('Insufficient Genres');
+      setMessage(AlertMessage.GenreError);
       return;
     }
     setSpotifyRes({seeds: [], tracks: []});
@@ -157,7 +168,7 @@ function App() {
     }).then(res => res.json())
       .then(data => {
         if (data.error) {
-          setMessage('Token Expired');
+          setMessage(AlertMessage.TokenError);
           setIsSaveLoading(false);
           return;
         }
@@ -180,9 +191,10 @@ function App() {
           .then(data => {
             if (data.error) {
               setIsSaveLoading(false);
-              setMessage('Token Expired');
+              setMessage(AlertMessage.TokenError);
               return;
             }
+            setMessage(AlertMessage.SaveSuccess);
             setIsSaveLoading(false);
             console.log(data);
           })
@@ -234,18 +246,23 @@ function App() {
                 onChange={handleHappinessChange}
                 initEnabled={false}
                 />
-              <GreenButton variant="outlined" color="primary" onClick={onGenerate}>
+              <GreenButton className={accessToken === '' ? "save-button" : ''} variant="outlined" color="primary" onClick={onGenerate} disabled={accessToken === ''}>
                 Generate
               </GreenButton>
             </div>
           </div>
         </Grid>
         <Grid item lg={8} md={8} sm={12} xs={12} className="display-panel">
-          {isVisible && 
+          {accessToken === '' &&
+            <div className="welcome-text">
+              <WelcomeText />
+            </div>
+          }
+          {isVisible && accessToken !== '' &&
             <div className="display-header">
               <img src={userData.images[0].url} className="user-image" alt={userData.display_name}/>
                 <div className="user-data">
-                  <div className="welcome-text">
+                  <div className="hello-text">
                     <Typography variant="h4">
                       {`Welcome back, ${userData.display_name}!`}
                     </Typography>
@@ -301,11 +318,28 @@ function App() {
               <CircularProgressBar />
             </div>
           }
+          {spotifyRes.seeds.length === 0 && !isPlaylistLoading &&
+            <div className="instruction-text">
+              <Typography variant="h5">Use the panel on the left to generate a playlist</Typography>
+            </div>
+          }
+          {spotifyRes.seeds.length !== 0 && spotifyRes.tracks.length === 0 && !isPlaylistLoading &&
+            <div className="no-found-text">
+              <Typography variant="h5">We couldn't find any music!</Typography>
+              <Typography variant="h6">Try a different search</Typography>
+            </div>
+          }
           {spotifyRes.tracks.length !==0 && spotifyRes.seeds.length !==0 && 
             <SpotifyList tracks={spotifyRes.tracks} onChange={handleVisibleChange}/>
           }
+          {message !== '' &&
+            <SnackbarNotif isOpen={true} message={message} onClose={handleSnackbarClose}/>
+          }
         </Grid>
       </Grid>
+      {message === AlertMessage.TokenError &&
+        <SignInModal />
+      }
     </div>
   );
 }
