@@ -20,10 +20,6 @@ export const DisplayPanel = (props: {accessToken: string,
     const [isSaveLoading, setIsSaveLoading] = useState(false);
     const [playlistTitle, setPlaylistTitle] = useState('Untitled-Playlist-1');
 
-    useEffect(() => {
-      console.log(props.accessToken)
-    }, [])
-
     function handleTitleChange(newTitle: string) {
         setPlaylistTitle(newTitle);
     }
