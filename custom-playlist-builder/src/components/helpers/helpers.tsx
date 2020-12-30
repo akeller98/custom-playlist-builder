@@ -1,14 +1,14 @@
 
 function generateSeedGenres(selectedGenres: any[], selectedMoreGenres: any[]): string {
     let selected_arr: string[] = [];
-    selectedGenres.map((genre) => {
+    selectedGenres.forEach((genre) => {
       if (genre.checked) {
-        return selected_arr.push(genre.id);
+        selected_arr.push(genre.id);
       }
     });
-    selectedMoreGenres.map((genre) => {
+    selectedMoreGenres.forEach((genre) => {
         if (genre.checked) {
-          return selected_arr.push(genre.id);
+          selected_arr.push(genre.id);
         }
       });
     return "seed_genres=" + selected_arr.join('%2C');

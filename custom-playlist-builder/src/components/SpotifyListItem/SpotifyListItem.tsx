@@ -11,28 +11,28 @@ import VisibilitySensor from "react-visibility-sensor";
 import { ProgressBar } from '../shared/ProgressBar';
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    inline: {
-      display: 'inline',
-      color: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700]
-    },
-    albumImage: {
-        objectFit: 'contain',
-        width: '5em',
-        marginRight: '1em',
-    },
-    playPause: {
-        color: '#1DB954',
-        height: '1.5em',
-        width: '1.5em',
-        marginRight: '1.5em'
-    },
-    disabled: {
-        color: '#bdbdbd',
-        height: '1.5em',
-        width: '1.5em',
-        marginRight: '1.5em'
-    },
+    createStyles({
+        inline: {
+        display: 'inline',
+        color: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700]
+        },
+        albumImage: {
+            objectFit: 'contain',
+            width: '5em',
+            marginRight: '1em',
+        },
+        playPause: {
+            color: '#1DB954',
+            height: '1.5em',
+            width: '1.5em',
+            marginRight: '1.5em'
+        },
+        disabled: {
+            color: '#bdbdbd',
+            height: '1.5em',
+            width: '1.5em',
+            marginRight: '1.5em'
+        },
   }),
 );
 

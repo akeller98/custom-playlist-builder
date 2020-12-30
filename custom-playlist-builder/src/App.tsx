@@ -8,7 +8,6 @@ import { WelcomeText } from './components/WelcomeText/WelcomeText';
 import { SettingsPanel } from './components/SettingsPanel/SettingsPanel';
 import { DisplayPanel } from './components/DisplayPanel/DisplayPanel';
 import { getUserData } from './components/helpers/http/http';
-import MoreGenresModal from './components/MoreGenresModal/MoreGenresModal';
 import './App.css';
 
 function App() {
