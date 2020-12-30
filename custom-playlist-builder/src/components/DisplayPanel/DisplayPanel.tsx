@@ -9,7 +9,13 @@ import { addToPlaylist, createPlaylist } from '../helpers/http/http';
 import { AlertMessage } from '../helpers/AlertEnum';
 import './DisplayPanel.css';
 
-export const DisplayPanel = (props: {accessToken: string, userData: any, spotifyRes: any, isPlaylistLoading: boolean, setMessage: (newMessage: string) => void}) => {
+export const DisplayPanel = (props: {accessToken: string, 
+                                    userData: any, 
+                                    spotifyRes: any, 
+                                    isPlaylistLoading: boolean, 
+                                    setMessage: (newMessage: string) => void,
+                                    setIsSignInVisible: (isSignInVisible: boolean) => void},
+                                    ) => {
     const [isVisible, setIsVisible] = useState(true);
     const [isSaveLoading, setIsSaveLoading] = useState(false);
     const [playlistTitle, setPlaylistTitle] = useState('Untitled-Playlist-1');
@@ -32,6 +38,7 @@ export const DisplayPanel = (props: {accessToken: string, userData: any, spotify
           const data = await createPlaylist(props.accessToken, props.userData.id, playlistTitle);
           if (data.error) {
             props.setMessage(AlertMessage.TokenError);
+            props.setIsSignInVisible(true);
             setIsSaveLoading(false);
             return;
           }
@@ -45,6 +52,7 @@ export const DisplayPanel = (props: {accessToken: string, userData: any, spotify
               if (addData.error) {
                 setIsSaveLoading(false);
                 props.setMessage(AlertMessage.TokenError);
+                props.setIsSignInVisible(true);
                 return;
               }
               props.setMessage(AlertMessage.SaveSuccess);

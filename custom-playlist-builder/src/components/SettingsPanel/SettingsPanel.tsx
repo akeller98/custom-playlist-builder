@@ -10,7 +10,8 @@ import './SettingsPanel.css';
 export function SettingsPanel(props: {accessToken: string,
                                         setMessage: (newMessage: string) => void,
                                         setSpotifyRes: (newRes: any) => void,
-                                        setIsPlaylistLoading: (newIsLoading: boolean) => void
+                                        setIsPlaylistLoading: (newIsLoading: boolean) => void,
+                                        setIsSignInVisible: (isSignInVisible: boolean) => void
                                     }) {
     const [popularity, setPopularity] = useState(0);
     const [isPopularity, setIsPopularity] = useState(true);
@@ -49,11 +50,18 @@ export function SettingsPanel(props: {accessToken: string,
                                         isAcousticness,
                                         acousticness,
                                         isHappiness,
-                                        happiness);
+                                        happiness); 
           props.setIsPlaylistLoading(false);
-          props.setSpotifyRes(data);
+          return data;
         }
-        fetchPlaylist();
+        fetchPlaylist().then((data) => {
+          if (data.error) {
+            props.setMessage(AlertMessage.TokenError);
+            props.setIsSignInVisible(true);
+          } else {
+            props.setSpotifyRes(data);
+          }
+        })
       }
 
     function handlePopularityChange(newPopularity: number, isEnabled: boolean): void {

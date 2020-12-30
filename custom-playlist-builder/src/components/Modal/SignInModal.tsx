@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
@@ -26,9 +26,13 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function SignInModal() {
+export default function SignInModal(props: {isSignInVisible: boolean, setIsSignInVisible: (isVisible: boolean) => void}) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(props.isSignInVisible);
+
+  useEffect(() => {
+    props.setIsSignInVisible(open);
+  }, [open]);
 
   const handleOpen = () => {
     setOpen(true);

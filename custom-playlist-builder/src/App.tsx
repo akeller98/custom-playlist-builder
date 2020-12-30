@@ -16,6 +16,7 @@ function App() {
   const [userData, setUserData] = useState({display_name: '', images: [{url: ''}], id: ''});
   const [message, setMessage] = useState('');
   const [isPlaylistLoading, setIsPlaylistLoading] = useState(false);
+  const [isSignInVisible, setIsSignInVisible] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -26,8 +27,13 @@ function App() {
         return;
       }
       const data = await getUserData(parsed);
-      setUserData(data);
       console.log(data);
+      if (data.error) {
+        setMessage(AlertMessage.TokenError);
+        setIsSignInVisible(true);
+        return;
+      }
+      setUserData(data);
     }
     fetchUserData();
   }, [])
@@ -50,6 +56,10 @@ function App() {
     setIsPlaylistLoading(newIsLoading);
   }
 
+  function handleIsSignInVisible(isSignInVisible: boolean) {
+    setIsSignInVisible(isSignInVisible);
+  }
+
   return (
     <div className="App">
       <Grid container spacing={0}>
@@ -59,7 +69,8 @@ function App() {
               accessToken={accessToken} 
               setMessage={handleMessageChange} 
               setSpotifyRes={handleSpotifyResChange} 
-              setIsPlaylistLoading={handleIsPlaylistLoading}/>
+              setIsPlaylistLoading={handleIsPlaylistLoading}
+              setIsSignInVisible={handleIsSignInVisible}/>
           </div>
         </Grid>
         <Grid item lg={8} md={8} sm={12} xs={12} className="display-panel">
@@ -74,15 +85,16 @@ function App() {
               userData={userData}
               spotifyRes={spotifyRes}
               isPlaylistLoading={isPlaylistLoading}
-              setMessage={handleMessageChange}/>
+              setMessage={handleMessageChange}
+              setIsSignInVisible={handleIsSignInVisible}/>
           }
         </Grid>
       </Grid>
       {message !== '' &&
             <SnackbarNotif isOpen={true} message={message} onClose={handleSnackbarClose}/>
       }
-      {message === AlertMessage.TokenError &&
-        <SignInModal />
+      {isSignInVisible &&
+        <SignInModal isSignInVisible={isSignInVisible} setIsSignInVisible={handleIsSignInVisible}/>
       }
     </div>
   );
