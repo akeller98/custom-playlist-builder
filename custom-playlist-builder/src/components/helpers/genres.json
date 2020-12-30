@@ -1,5 +1,5 @@
 {
-    "popular-genres": [
+    "popular_genres": [
         "pop",
         "hip-hop",
         "rock",
@@ -7,8 +7,7 @@
         "indie",
         "k-pop",
         "country",
-        "classical",
-        "latin"
+        "classical"
     ],
     "genres": [
         "acoustic",
@@ -74,6 +73,7 @@
         "j-rock",
         "jazz",
         "kids",
+        "latin",
         "latino",
         "malay",
         "mandopop",

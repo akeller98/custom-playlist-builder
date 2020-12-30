@@ -1,22 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import * as genres from '../helpers/genres.json';
 import * as genresInitialState from '../helpers/genreSelectInitialState.json';
 import { GreenCheckbox }  from '../shared/GreenCheckbox';
 
 export default function GenreSelector(props: {onChange: (newValue: any[]) => void}) {
-    //const [state, setState] = useState(genresInitialState.popular_genres)
-    const [state, setState] = useState([
-        {id: "pop", checked: true}, 
-        {id: "hip-hop", checked: false}, 
-        {id: "rock", checked: false}, 
-        {id: "edm", checked: false}, 
-        {id: "indie", checked: false}, 
-        {id: "k-pop", checked: false}, 
-        {id: "country", checked: false}, 
-        {id: "classical", checked: false}, 
-    ]);
+    const [state, setState] = useState(genresInitialState.popular_genres)
 
     useEffect(() => {
         props.onChange(state)

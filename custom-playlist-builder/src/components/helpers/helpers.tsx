@@ -1,11 +1,16 @@
 
-function generateSeedGenres(selectedGenres: any[]): string {
+function generateSeedGenres(selectedGenres: any[], selectedMoreGenres: any[]): string {
     let selected_arr: string[] = [];
     selectedGenres.map((genre) => {
       if (genre.checked) {
         return selected_arr.push(genre.id);
       }
     });
+    selectedMoreGenres.map((genre) => {
+        if (genre.checked) {
+          return selected_arr.push(genre.id);
+        }
+      });
     return "seed_genres=" + selected_arr.join('%2C');
 }
 
@@ -40,6 +45,7 @@ function buildTuneableString(isPopularity: boolean,
 }
 
 export default function queryBuilder(selectedGenres: any[],
+                                    selectedMoreGenres: any[],
                                     isPopularity: boolean, 
                                     popularity: number,
                                     isEnergy: boolean,
@@ -51,5 +57,5 @@ export default function queryBuilder(selectedGenres: any[],
                                     isHappiness: boolean,
                                     happiness: number
                                     ): string {
-    return 'https://api.spotify.com/v1/recommendations?' + generateSeedGenres(selectedGenres) + buildTuneableString(isPopularity, popularity, isEnergy, energy, isInstrumentalness, instrumentalness, isAcousticness, acousticness, isHappiness, happiness) + "&limit=30";
+    return 'https://api.spotify.com/v1/recommendations?' + generateSeedGenres(selectedGenres, selectedMoreGenres) + buildTuneableString(isPopularity, popularity, isEnergy, energy, isInstrumentalness, instrumentalness, isAcousticness, acousticness, isHappiness, happiness) + "&limit=30";
 }

@@ -6,6 +6,7 @@ import { GreenButton } from '../shared/GreenButton';
 import { AlertMessage } from '../helpers/AlertEnum';
 import { getPlaylist } from '../helpers/http/http';
 import './SettingsPanel.css';
+import MoreGenresModal from '../MoreGenresModal/MoreGenresModal';
 
 export function SettingsPanel(props: {accessToken: string,
                                         setMessage: (newMessage: string) => void,
@@ -24,14 +25,21 @@ export function SettingsPanel(props: {accessToken: string,
     const [happiness, setHappiness] = useState(0);
     const [isHappiness, setIsHappiness] = useState(true);
     const [selectedGenres, setSelectedGenres] = useState([{id: 'default', checked: false}]);
+    const [selectedMoreGenres, setSelectedMoreGenres] = useState([{id: 'default', checked: false}]);
+    const [isMoreClicked, setIsMoreClicked] = useState(false);
 
     function onGenerate(): void {
         let selected: boolean[] = [];
+        let moreSelected: boolean[] = [];
         selectedGenres.map((genre: any) => {
           return selected.push(genre.checked);
         });
+        selectedMoreGenres.map((genre: any) => {
+          return moreSelected.push(genre.checked);
+        });
         let check: boolean = selected.every((e) => {return !e});
-        if (check) {
+        let moreCheck: boolean = moreSelected.every((e) => {return !e});
+        if (check && moreCheck) {
           props.setIsPlaylistLoading(false);
           props.setMessage(AlertMessage.GenreError);
           return;
@@ -41,6 +49,7 @@ export function SettingsPanel(props: {accessToken: string,
         const fetchPlaylist = async () => {
           const data = await getPlaylist(props.accessToken,
                                         selectedGenres,
+                                        selectedMoreGenres,
                                         isPopularity,
                                         popularity,
                                         isEnergy,
@@ -93,6 +102,10 @@ export function SettingsPanel(props: {accessToken: string,
         setSelectedGenres(newSelectedGenres);
     }
 
+    function handleMoreGenresChange(newSelectedGenres: {id: string, checked: boolean}[]) {
+      setSelectedMoreGenres(newSelectedGenres);
+  }
+
     return (
         <React.Fragment>
             <div className="sub-title">
@@ -100,6 +113,9 @@ export function SettingsPanel(props: {accessToken: string,
             </div>
             <div className="genre-selector">
               <GenreSelector onChange={handleGenreChange}/>
+            </div>
+            <div className="genre-drawer">
+              <MoreGenresModal onChange={handleMoreGenresChange}/>
             </div>
             <div className="metrics-panel">
               <div className="sub-title">

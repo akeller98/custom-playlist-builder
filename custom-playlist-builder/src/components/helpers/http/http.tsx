@@ -9,6 +9,7 @@ export const getUserData = async (parsed: string): Promise<any> => {
 
 export const getPlaylist = async (accessToken: string,
                                 selectedGenres: any[],
+                                selectedMoreGenres: any[],
                                 isPopularity: boolean, 
                                 popularity: number,
                                 isEnergy: boolean,
@@ -20,7 +21,8 @@ export const getPlaylist = async (accessToken: string,
                                 isHappiness: boolean,
                                 happiness: number
                                 ): Promise<any> => {
-    const res = await fetch(queryBuilder(selectedGenres, 
+    const res = await fetch(queryBuilder(selectedGenres,
+                                        selectedMoreGenres, 
                                         isPopularity, 
                                         popularity,
                                         isEnergy,
@@ -32,7 +34,7 @@ export const getPlaylist = async (accessToken: string,
                                         isHappiness,
                                         happiness
                                         ), {
-        headers: {'Authorization': 'Bearer ' + accessToken}
+        headers: {'Authorization': `Bearer ${accessToken}`}
     });
     return await res.json();
 }

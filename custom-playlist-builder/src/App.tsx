@@ -8,6 +8,7 @@ import { WelcomeText } from './components/WelcomeText/WelcomeText';
 import { SettingsPanel } from './components/SettingsPanel/SettingsPanel';
 import { DisplayPanel } from './components/DisplayPanel/DisplayPanel';
 import { getUserData } from './components/helpers/http/http';
+import MoreGenresModal from './components/MoreGenresModal/MoreGenresModal';
 import './App.css';
 
 function App() {
@@ -62,7 +63,7 @@ function App() {
   return (
     <div className="App">
       <Grid container spacing={0}>
-        <Grid item lg={4} md={4} sm={12} xs={12} className="App-header">
+        <Grid item xl={4} lg={4} md={4} sm={12} xs={12} className="App-header">
           <div className="settings-panel">
             <SettingsPanel 
               accessToken={accessToken} 
@@ -72,7 +73,7 @@ function App() {
               setIsSignInVisible={handleIsSignInVisible}/>
           </div>
         </Grid>
-        <Grid item lg={8} md={8} sm={12} xs={12} className="display-panel">
+        <Grid item xl={8} lg={8} md={8} sm={12} xs={12} className="display-panel">
           {accessToken === '' &&
             <div className="welcome-text">
               <WelcomeText />

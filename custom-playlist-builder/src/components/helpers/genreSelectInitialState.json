@@ -1,1 +1,510 @@
-{"popular_genres": {"pop": false, "hip_hop": false, "rock": false, "edm": false, "indie": false, "k_pop": false, "country": false, "classical": false, "latin": false}, "genres": {"acoustic": false, "afrobeat": false, "alt_rock": false, "alternative": false, "ambient": false, "anime": false, "black_metal": false, "bluegrass": false, "blues": false, "bossanova": false, "brazil": false, "breakbeat": false, "british": false, "cantopop": false, "chicago_house": false, "children": false, "chill": false, "club": false, "comedy": false, "dance": false, "dancehall": false, "death_metal": false, "deep_house": false, "detroit_techno": false, "disco": false, "disney": false, "drum_and_bass": false, "dub": false, "dubstep": false, "electro": false, "electronic": false, "emo": false, "folk": false, "forro": false, "french": false, "funk": false, "garage": false, "german": false, "gospel": false, "goth": false, "grindcore": false, "groove": false, "grunge": false, "guitar": false, "happy": false, "hard_rock": false, "hardcore": false, "hardstyle": false, "heavy_metal": false, "holidays": false, "honky_tonk": false, "house": false, "idm": false, "indian": false, "indie_pop": false, "industrial": false, "iranian": false, "j_dance": false, "j_idol": false, "j_pop": false, "j_rock": false, "jazz": false, "kids": false, "latino": false, "malay": false, "mandopop": false, "metal": false, "metal_misc": false, "metalcore": false, "minimal_techno": false, "movies": false, "mpb": false, "new_age": false, "new_release": false, "opera": false, "pagode": false, "party": false, "philippines_opm": false, "piano": false, "pop_film": false, "post_dubstep": false, "power_pop": false, "progressive_house": false, "psych_rock": false, "punk": false, "punk_rock": false, "r_n_b": false, "rainy_day": false, "reggae": false, "reggaeton": false, "road_trip": false, "rock_n_roll": false, "rockabilly": false, "romance": false, "sad": false, "salsa": false, "samba": false, "sertanejo": false, "show_tunes": false, "singer_songwriter": false, "ska": false, "sleep": false, "songwriter": false, "soul": false, "soundtracks": false, "spanish": false, "study": false, "summer": false, "swedish": false, "synth_pop": false, "tango": false, "techno": false, "trance": false, "trip_hop": false, "turkish": false, "work_out": false, "world_music": false}}
+{
+    "popular_genres": [
+        {
+            "id": "pop",
+            "checked": true
+        },
+        {
+            "id": "hip-hop",
+            "checked": false
+        },
+        {
+            "id": "rock",
+            "checked": false
+        },
+        {
+            "id": "edm",
+            "checked": false
+        },
+        {
+            "id": "indie",
+            "checked": false
+        },
+        {
+            "id": "k-pop",
+            "checked": false
+        },
+        {
+            "id": "country",
+            "checked": false
+        },
+        {
+            "id": "classical",
+            "checked": false
+        }
+    ],
+    "genres": [
+        {
+            "id": "acoustic",
+            "checked": false
+        },
+        {
+            "id": "afrobeat",
+            "checked": false
+        },
+        {
+            "id": "alt-rock",
+            "checked": false
+        },
+        {
+            "id": "alternative",
+            "checked": false
+        },
+        {
+            "id": "ambient",
+            "checked": false
+        },
+        {
+            "id": "anime",
+            "checked": false
+        },
+        {
+            "id": "black-metal",
+            "checked": false
+        },
+        {
+            "id": "bluegrass",
+            "checked": false
+        },
+        {
+            "id": "blues",
+            "checked": false
+        },
+        {
+            "id": "bossanova",
+            "checked": false
+        },
+        {
+            "id": "brazil",
+            "checked": false
+        },
+        {
+            "id": "breakbeat",
+            "checked": false
+        },
+        {
+            "id": "british",
+            "checked": false
+        },
+        {
+            "id": "cantopop",
+            "checked": false
+        },
+        {
+            "id": "chicago-house",
+            "checked": false
+        },
+        {
+            "id": "children",
+            "checked": false
+        },
+        {
+            "id": "chill",
+            "checked": false
+        },
+        {
+            "id": "club",
+            "checked": false
+        },
+        {
+            "id": "comedy",
+            "checked": false
+        },
+        {
+            "id": "dance",
+            "checked": false
+        },
+        {
+            "id": "dancehall",
+            "checked": false
+        },
+        {
+            "id": "death-metal",
+            "checked": false
+        },
+        {
+            "id": "deep-house",
+            "checked": false
+        },
+        {
+            "id": "detroit-techno",
+            "checked": false
+        },
+        {
+            "id": "disco",
+            "checked": false
+        },
+        {
+            "id": "disney",
+            "checked": false
+        },
+        {
+            "id": "drum-and-bass",
+            "checked": false
+        },
+        {
+            "id": "dub",
+            "checked": false
+        },
+        {
+            "id": "dubstep",
+            "checked": false
+        },
+        {
+            "id": "electro",
+            "checked": false
+        },
+        {
+            "id": "electronic",
+            "checked": false
+        },
+        {
+            "id": "emo",
+            "checked": false
+        },
+        {
+            "id": "folk",
+            "checked": false
+        },
+        {
+            "id": "forro",
+            "checked": false
+        },
+        {
+            "id": "french",
+            "checked": false
+        },
+        {
+            "id": "funk",
+            "checked": false
+        },
+        {
+            "id": "garage",
+            "checked": false
+        },
+        {
+            "id": "german",
+            "checked": false
+        },
+        {
+            "id": "gospel",
+            "checked": false
+        },
+        {
+            "id": "goth",
+            "checked": false
+        },
+        {
+            "id": "grindcore",
+            "checked": false
+        },
+        {
+            "id": "groove",
+            "checked": false
+        },
+        {
+            "id": "grunge",
+            "checked": false
+        },
+        {
+            "id": "guitar",
+            "checked": false
+        },
+        {
+            "id": "happy",
+            "checked": false
+        },
+        {
+            "id": "hard-rock",
+            "checked": false
+        },
+        {
+            "id": "hardcore",
+            "checked": false
+        },
+        {
+            "id": "hardstyle",
+            "checked": false
+        },
+        {
+            "id": "heavy-metal",
+            "checked": false
+        },
+        {
+            "id": "holidays",
+            "checked": false
+        },
+        {
+            "id": "honky-tonk",
+            "checked": false
+        },
+        {
+            "id": "house",
+            "checked": false
+        },
+        {
+            "id": "idm",
+            "checked": false
+        },
+        {
+            "id": "indian",
+            "checked": false
+        },
+        {
+            "id": "indie-pop",
+            "checked": false
+        },
+        {
+            "id": "industrial",
+            "checked": false
+        },
+        {
+            "id": "iranian",
+            "checked": false
+        },
+        {
+            "id": "j-dance",
+            "checked": false
+        },
+        {
+            "id": "j-idol",
+            "checked": false
+        },
+        {
+            "id": "j-pop",
+            "checked": false
+        },
+        {
+            "id": "j-rock",
+            "checked": false
+        },
+        {
+            "id": "jazz",
+            "checked": false
+        },
+        {
+            "id": "kids",
+            "checked": false
+        },
+        {
+            "id": "latin",
+            "checked": false
+        },
+        {
+            "id": "latino",
+            "checked": false
+        },
+        {
+            "id": "malay",
+            "checked": false
+        },
+        {
+            "id": "mandopop",
+            "checked": false
+        },
+        {
+            "id": "metal",
+            "checked": false
+        },
+        {
+            "id": "metal-misc",
+            "checked": false
+        },
+        {
+            "id": "metalcore",
+            "checked": false
+        },
+        {
+            "id": "minimal-techno",
+            "checked": false
+        },
+        {
+            "id": "movies",
+            "checked": false
+        },
+        {
+            "id": "mpb",
+            "checked": false
+        },
+        {
+            "id": "new-age",
+            "checked": false
+        },
+        {
+            "id": "new-release",
+            "checked": false
+        },
+        {
+            "id": "opera",
+            "checked": false
+        },
+        {
+            "id": "pagode",
+            "checked": false
+        },
+        {
+            "id": "party",
+            "checked": false
+        },
+        {
+            "id": "philippines-opm",
+            "checked": false
+        },
+        {
+            "id": "piano",
+            "checked": false
+        },
+        {
+            "id": "pop-film",
+            "checked": false
+        },
+        {
+            "id": "post-dubstep",
+            "checked": false
+        },
+        {
+            "id": "power-pop",
+            "checked": false
+        },
+        {
+            "id": "progressive-house",
+            "checked": false
+        },
+        {
+            "id": "psych-rock",
+            "checked": false
+        },
+        {
+            "id": "punk",
+            "checked": false
+        },
+        {
+            "id": "punk-rock",
+            "checked": false
+        },
+        {
+            "id": "r-n-b",
+            "checked": false
+        },
+        {
+            "id": "rainy-day",
+            "checked": false
+        },
+        {
+            "id": "reggae",
+            "checked": false
+        },
+        {
+            "id": "reggaeton",
+            "checked": false
+        },
+        {
+            "id": "road-trip",
+            "checked": false
+        },
+        {
+            "id": "rock-n-roll",
+            "checked": false
+        },
+        {
+            "id": "rockabilly",
+            "checked": false
+        },
+        {
+            "id": "romance",
+            "checked": false
+        },
+        {
+            "id": "sad",
+            "checked": false
+        },
+        {
+            "id": "salsa",
+            "checked": false
+        },
+        {
+            "id": "samba",
+            "checked": false
+        },
+        {
+            "id": "sertanejo",
+            "checked": false
+        },
+        {
+            "id": "show-tunes",
+            "checked": false
+        },
+        {
+            "id": "singer-songwriter",
+            "checked": false
+        },
+        {
+            "id": "ska",
+            "checked": false
+        },
+        {
+            "id": "sleep",
+            "checked": false
+        },
+        {
+            "id": "songwriter",
+            "checked": false
+        },
+        {
+            "id": "soul",
+            "checked": false
+        },
+        {
+            "id": "soundtracks",
+            "checked": false
+        },
+        {
+            "id": "spanish",
+            "checked": false
+        },
+        {
+            "id": "study",
+            "checked": false
+        },
+        {
+            "id": "summer",
+            "checked": false
+        },
+        {
+            "id": "swedish",
+            "checked": false
+        },
+        {
+            "id": "synth-pop",
+            "checked": false
+        },
+        {
+            "id": "tango",
+            "checked": false
+        },
+        {
+            "id": "techno",
+            "checked": false
+        },
+        {
+            "id": "trance",
+            "checked": false
+        },
+        {
+            "id": "trip-hop",
+            "checked": false
+        },
+        {
+            "id": "turkish",
+            "checked": false
+        },
+        {
+            "id": "work-out",
+            "checked": false
+        },
+        {
+            "id": "world-music",
+            "checked": false
+        }
+    ]
+}

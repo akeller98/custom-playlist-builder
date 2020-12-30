@@ -1,0 +1,41 @@
+.text-input {
+    background-color: transparent;
+    color: white;
+    border: none;
+    font-size: 2em;
+}
+
+.text-input::placeholder {
+    color: white;
+}
+
+.text-input:focus {
+    outline: none;
+    color: #52af77;
+    border-color: #52af77;
+    border-bottom: 1px solid;
+}
+
+.text-input:hover {
+    color: #52af77;
+    border-color: #52af77;
+    border-bottom: 1px solid;
+}
+
+.text-input:hover::placeholder {
+    color: #52af77;
+}
+
+.text-input:focus::placeholder {
+    color: #52af77;
+}
+
+.input-container {
+    position: sticky;
+    position:-webkit-sticky;
+    top: 0;
+    background-color: #0d1117;
+    box-sizing: border-box;
+    padding-top: 2em;
+    padding-bottom: 0.5em;
+}
