@@ -81,6 +81,11 @@ export default function MoreGenresModal(props: {onChange: (newValue: any[]) => v
   const handleChange = (event: { target: { checked: boolean; name: string; }; }) => {
     let updated_box = {id: event.target.name, checked: event.target.checked};
     let updated_state: { id: string; checked: boolean; }[] = [];
+    if (event.target.checked) {
+      setMoreGenreCount(moreGenreCount + 1);
+    } else {
+      setMoreGenreCount(moreGenreCount - 1);
+    }
     state.map((genre) => {
         if (genre.id === event.target.name) {
             return updated_state.push(updated_box);
@@ -130,8 +135,8 @@ export default function MoreGenresModal(props: {onChange: (newValue: any[]) => v
       
         <React.Fragment key={'left'}>
         <ClickAwayListener onClickAway={handleClickAway}>
-          <div>
-            <GreenButton variant="outlined" color="primary" onClick={toggleDrawer('left', true)}>More Genres</GreenButton>
+          <div className="more-genres-modal">
+            <GreenButton variant="outlined" color="primary" onClick={toggleDrawer('left', true)}>{`More Genres ${moreGenreCount !== 0 ? `+${moreGenreCount}` : ''}`}</GreenButton>
             <SwipeableDrawer
               anchor={'left'}
               open={anchorState['left']}

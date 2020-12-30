@@ -26,7 +26,6 @@ export function SettingsPanel(props: {accessToken: string,
     const [isHappiness, setIsHappiness] = useState(true);
     const [selectedGenres, setSelectedGenres] = useState([{id: 'default', checked: false}]);
     const [selectedMoreGenres, setSelectedMoreGenres] = useState([{id: 'default', checked: false}]);
-    const [isMoreClicked, setIsMoreClicked] = useState(false);
 
     function onGenerate(): void {
         let selected: boolean[] = [];
@@ -104,12 +103,14 @@ export function SettingsPanel(props: {accessToken: string,
 
     function handleMoreGenresChange(newSelectedGenres: {id: string, checked: boolean}[]) {
       setSelectedMoreGenres(newSelectedGenres);
-  }
+    }
 
     return (
         <React.Fragment>
             <div className="sub-title">
-              <Typography variant="h4">Genres</Typography>
+              <div className="genre-title">
+                <Typography variant="h4">{`Genres`}</Typography>
+              </div>
             </div>
             <div className="genre-selector">
               <GenreSelector onChange={handleGenreChange}/>
