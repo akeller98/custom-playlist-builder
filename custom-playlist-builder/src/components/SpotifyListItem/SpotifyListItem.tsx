@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function SpotifyListItem(props: {key: any, track: any, index: number, onChange: (newVisible: boolean) => void}) {
     const [isPlaying, setIsPlaying] = useState(false);
-    const isDisabled = props.track.preview_url === null
+    const isDisabled = props.track.preview_url === null;
     const [currTime, setCurrTime] = useState(0);
     const [isActive, setIsActive] = useState(false);
     const [isAnimate, setIsAnimate] = useState(false);

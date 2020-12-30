@@ -39,7 +39,8 @@ export default function MoreGenresModal(props: {onChange: (newValue: any[]) => v
         marginLeft: '1em'
       },
       closeButton: {
-        color: 'white'
+        color: 'white',
+        paddingBottom: '1em'
       }
     }),
   );
@@ -78,47 +79,45 @@ export default function MoreGenresModal(props: {onChange: (newValue: any[]) => v
 }
 
   return (
-    <div>  
-      <React.Fragment key={'left'}>       
-        <div className="more-genres-modal">
-          <GreenButton variant="outlined" color="primary" onClick={toggleDrawer(true)}>{`More Genres ${moreGenreCount !== 0 ? `+${moreGenreCount}` : ''}`}</GreenButton>
-          <SwipeableDrawer
-            anchor={'left'}
-            open={anchorState}
-            onClose={toggleDrawer(false)}
-            onOpen={toggleDrawer(true)}
+    <div>     
+      <div className="more-genres-modal">
+        <GreenButton variant="outlined" color="primary" onClick={toggleDrawer(true)}>{`More Genres ${moreGenreCount !== 0 ? `+${moreGenreCount}` : ''}`}</GreenButton>
+        <SwipeableDrawer
+          anchor={'left'}
+          open={anchorState}
+          onClose={toggleDrawer(false)}
+          onOpen={toggleDrawer(true)}
+        >
+          <div
+            className={classes.list}
+            role="presentation"
           >
-            <div
-              className={classes.list}
-              role="presentation"
-            >
-              <div className={classes.search}>
-                <input type='text' placeholder="Search Genre" className="text-input" value={search} onChange={handleSearchChange}/>
-                <IconButton edge="end" className={classes.closeButton} aria-label="close-buton" onClick={toggleDrawer(false)}>
-                  <CloseIcon />
-                </IconButton>
-              </div>
-              <FormGroup row className={classes.genreList}>
-                  {state.filter((g) => {
-                    if (search === '') {
-                      return g
-                    }
-                    return g.id.match(search)
-                  }).map((genre, i) => {
-                      return (
-                        <FormControlLabel
-                            control={<GreenCheckbox checked={genre.checked} name={genre.id} onChange={handleChange}/>}
-                            label={genre.id}
-                            key={i}
-                            className={classes.boxes}
-                        />
-                      )
-                  })}
-              </FormGroup>
+            <div className={classes.search}>
+              <input type='text' placeholder="Search Genre" className="text-input" value={search} onChange={handleSearchChange} autoFocus/>
+              <IconButton edge="end" className={classes.closeButton} aria-label="close-buton" onClick={toggleDrawer(false)}>
+                <CloseIcon />
+              </IconButton>
             </div>
-          </SwipeableDrawer>
-        </div>
-      </React.Fragment>      
+            <FormGroup row className={classes.genreList}>
+                {state.filter((g) => {
+                  if (search === '') {
+                    return g
+                  }
+                  return g.id.match(search)
+                }).map((genre, i) => {
+                    return (
+                      <FormControlLabel
+                          control={<GreenCheckbox checked={genre.checked} name={genre.id} onChange={handleChange}/>}
+                          label={genre.id}
+                          key={i}
+                          className={classes.boxes}
+                      />
+                    )
+                })}
+            </FormGroup>
+          </div>
+        </SwipeableDrawer>
+      </div>    
     </div>
   );
 }

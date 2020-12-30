@@ -13,6 +13,6 @@ export function InputField(props: {onChange: (newTitle: string) => void, title: 
     }
 
     return (
-        <input type='text' placeholder="Title your playlist" className={"text-input"} onChange={handleChange} value={title}/>
+        <input type='text' placeholder="Title your playlist" className={"text-input"} onChange={handleChange} value={title} autoFocus/>
     )
 }
