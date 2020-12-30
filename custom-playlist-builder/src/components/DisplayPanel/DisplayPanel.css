@@ -40,6 +40,11 @@
     padding-top: 0.75em;
 }
 
+.create-playlist-text {
+    height: 100%;
+    margin-left: 9em;
+  }
+
 .sm-create-playlist-text {
     height: 100%;
     margin-left: 5em;
