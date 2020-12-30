@@ -27,7 +27,6 @@ function App() {
         return;
       }
       const data = await getUserData(parsed);
-      console.log(data);
       if (data.error) {
         setMessage(AlertMessage.TokenError);
         setIsSignInVisible(true);
