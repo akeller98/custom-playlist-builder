@@ -32,11 +32,7 @@ export default function SignInModal(props: {isSignInVisible: boolean, setIsSignI
 
   useEffect(() => {
     props.setIsSignInVisible(open);
-  }, [open]);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  }, [open, props]);
 
   const handleClose = () => {
     setOpen(false);

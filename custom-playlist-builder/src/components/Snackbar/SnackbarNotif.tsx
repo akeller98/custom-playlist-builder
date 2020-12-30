@@ -26,7 +26,7 @@ export function SnackbarNotif(props: {isOpen: boolean, message: string, onClose:
 
     useEffect(() => {
         props.onClose(!open);
-    }, [open])
+    }, [open, props])
 
     if (props.message === AlertMessage.GenreError) {
         severity = AlertVariant.INSUFFICIENT_GENRES;

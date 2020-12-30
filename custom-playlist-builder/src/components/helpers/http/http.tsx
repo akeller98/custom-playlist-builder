@@ -2,7 +2,7 @@ import queryBuilder from '../helpers';
 
 export const getUserData = async (parsed: string): Promise<any> => {
     const res = await fetch('https://api.spotify.com/v1/me', {
-        headers: {'Authorization': 'Bearer ' + parsed}
+        headers: {'Authorization': `Bearer ${parsed}`}
     });
     return await res.json();
 }
@@ -40,7 +40,7 @@ export const getPlaylist = async (accessToken: string,
 export const createPlaylist = async (accessToken: string, id: string, playlistTitle: string): Promise<any> => {
     const res = await fetch(`https://api.spotify.com/v1/users/${id}/playlists`, {
       headers: {
-        'Authorization': 'Bearer ' + accessToken,
+        'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json'
       },
       method: 'post',
@@ -56,7 +56,7 @@ export const createPlaylist = async (accessToken: string, id: string, playlistTi
 export const addToPlaylist = async (accessToken: string, playlistId: string, uris: string[]) => {
     const res = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
         headers: {
-          'Authorization': 'Bearer ' + accessToken,
+          'Authorization': `Bearer ${accessToken}`,
           'Accept': 'application/json'
         },
         method: 'post',

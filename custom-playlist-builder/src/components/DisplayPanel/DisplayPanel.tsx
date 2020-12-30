@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { InputField } from '../shared/InputField/InputField';
 import { CircularProgressBar } from '../shared/CircularProgressBar';
