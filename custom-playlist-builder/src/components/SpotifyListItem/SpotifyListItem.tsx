@@ -75,14 +75,6 @@ export default function SpotifyListItem(props: {key: any, track: any, index: num
         }
     }, [isPlaying])
 
-    useEffect(() => { /*FIX THIS LATER*/
-        return function cleanup() {
-            setIsPlaying(false);
-            setCurrTime(0);
-            setIsActive(false);
-        }
-    }, [props.track])
-
     useEffect(() => { /*FIX THIS TOO */
         props.onChange(isAnimate);
     }, [isAnimate])
