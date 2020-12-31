@@ -17,6 +17,7 @@
     "query-string": "^6.13.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-responsive": "^8.2.0",
     "react-scripts": "4.0.1",
     "react-spring": "^8.0.27",
     "react-visibility-sensor": "^5.1.1",
@@ -48,6 +49,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-howler": "^3.7.2"
+    "@types/react-howler": "^3.7.2",
+    "@types/react-responsive": "^8.0.2"
   }
 }

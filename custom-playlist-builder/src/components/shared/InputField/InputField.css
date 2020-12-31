@@ -16,6 +16,7 @@
     color: #52af77;
     border-color: #52af77;
     border-bottom: 1px solid;
+    width: '50%';  
 }
 
 .text-input:hover::placeholder {

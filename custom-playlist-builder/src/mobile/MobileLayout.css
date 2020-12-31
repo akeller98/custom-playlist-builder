@@ -1,0 +1,15 @@
+.mobile-layout {
+    background-color: #161b22;
+    height: 100%;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.coming-soon {
+    text-align: center;
+    color: white;
+    height: 100%;
+}
