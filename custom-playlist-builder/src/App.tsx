@@ -7,14 +7,12 @@ export default function App() {
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-device-width: 1224px)'
   })
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1223px)' });
   
   return (
     <React.Fragment>
-      {isDesktopOrLaptop && !isTabletOrMobile &&
-        <DesktopLayout/>
-      }
-      {isTabletOrMobile && !isDesktopOrLaptop &&
+      {isDesktopOrLaptop ? 
+        <DesktopLayout/> :
         <MobileLayout/>
       }
     </React.Fragment>
