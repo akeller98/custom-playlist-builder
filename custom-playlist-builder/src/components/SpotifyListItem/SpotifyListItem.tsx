@@ -69,6 +69,7 @@ export default function SpotifyListItem(props: {key: any, track: any, index: num
 
     useEffect(() => {
         if (isPlaying && audioEl.current !== null) {
+            audioEl.current.volume = 0.7;
             audioEl.current.play();
         } else if(!isPlaying && audioEl.current !== null){
             audioEl.current.pause();
